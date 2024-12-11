@@ -30,7 +30,12 @@ export class FormsComponent {
 
   constructor(private fb: FormBuilder) {
     this.personForm = fb.group({
+      name: '',
+      lastName: '',
+      age: '',
+      job: '',
       phone: [''],
+      idCard: '',
     });
   }
 }
