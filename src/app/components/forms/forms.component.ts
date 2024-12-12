@@ -10,7 +10,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSelectModule } from '@angular/material/select';
 
+interface IdentifyDocument {
+  value: string;
+  viewValue: string;
+}
 @Component({
   selector: 'app-forms',
   imports: [
@@ -20,6 +25,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatDatepickerModule,
     ReactiveFormsModule,
     MatGridListModule,
+    MatSelectModule,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './forms.component.html',
@@ -27,6 +33,11 @@ import { MatGridListModule } from '@angular/material/grid-list';
 })
 export class FormsComponent {
   personForm: FormGroup;
+
+  identifyDocuments: IdentifyDocument[] = [
+    { value: 'id', viewValue: 'DNI' },
+    { value: 'passport', viewValue: 'PASAPORTE' },
+  ];
 
   constructor(private fb: FormBuilder) {
     this.personForm = fb.group({
@@ -36,6 +47,8 @@ export class FormsComponent {
       job: '',
       phone: [''],
       idCard: '',
+      email: '',
+      address: '',
     });
   }
 }
