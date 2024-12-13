@@ -49,10 +49,18 @@ export class FormsComponent {
       idCard: '',
       email: '',
       address: '',
+      birthdate: '',
     });
   }
 
-  get age() {
-    return 31;
+  get age(): number | null {
+    const birthdate = this.personForm.get('birthdate')?.value;
+    if (!birthdate) {
+      return null;
+    }
+
+    const ageInMill = Date.now() - birthdate.getTime();
+    const ageDate = new Date(ageInMill);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
 }
