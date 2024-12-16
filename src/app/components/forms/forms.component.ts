@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
+import { Validators } from '@angular/forms';
 
 interface IdentifyDocument {
   value: string;
@@ -42,14 +43,14 @@ export class FormsComponent {
 
   constructor(private fb: FormBuilder) {
     this.personForm = fb.group({
-      name: '',
-      lastName: '',
-      job: '',
-      phone: [''],
-      idCard: '',
-      email: '',
-      address: '',
+      name: ['', Validators.required],
+      lastName: ['', Validators.required],
       birthdate: '',
+      job: ['', Validators.required],
+      phone: ['', Validators.required],
+      idCard: ['', Validators.required],
+      email: ['', Validators.required, Validators.email],
+      address: ['', Validators.required],
     });
   }
 
