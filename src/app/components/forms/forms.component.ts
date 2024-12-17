@@ -12,6 +12,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { Validators } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 interface IdentifyDocument {
   value: string;
@@ -27,6 +29,8 @@ interface IdentifyDocument {
     ReactiveFormsModule,
     MatGridListModule,
     MatSelectModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './forms.component.html',

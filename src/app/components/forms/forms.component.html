@@ -13,7 +13,7 @@
       </mat-form-field>
       <mat-form-field class="example-full-width">
         <mat-label>Fecha de Nacimiento</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="birthdate"/>
+        <input matInput [matDatepicker]="picker" formControlName="birthdate" />
         <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
         <mat-datepicker-toggle
           matIconSuffix
@@ -23,7 +23,7 @@
       </mat-form-field>
       <mat-form-field class="example-full-width">
         <mat-label>Edad</mat-label>
-        <input matInput type="number" [value]="age"/>
+        <input matInput type="number" [value]="age" />
       </mat-form-field>
       <mat-form-field class="example-full-width">
         <mat-label>Ocupación</mat-label>
@@ -57,4 +57,10 @@
       </mat-form-field>
     </mat-grid-list>
   </form>
+  <div class="subheader">
+    <h1>Historia clínica</h1>
+    <button class="btn" mat-fab color="primary" matTooltip="Registrar">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
 </div>
