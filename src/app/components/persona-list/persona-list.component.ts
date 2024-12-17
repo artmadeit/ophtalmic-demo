@@ -5,6 +5,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
+import { PersonaService } from '../persona.service';
+import { Persona } from '../Persona';
 
 @Component({
   selector: 'app-persona-list',
@@ -13,6 +15,12 @@ import { RouterLink } from '@angular/router';
   styleUrl: './persona-list.component.scss'
 })
 export class PersonaListComponent {
-  dataSource = new MatTableDataSource<any>([]);
+  dataSource = new MatTableDataSource<Persona>([]);
   displayedColumns: string[] = ['documentType', 'documentNumber', 'firstName', 'lastName'];
+
+  constructor(private personaService: PersonaService) {
+    this.personaService.findAll(0, 10).subscribe(data => {
+      this.dataSource.data = data.content;
+    });
+  }
 }
