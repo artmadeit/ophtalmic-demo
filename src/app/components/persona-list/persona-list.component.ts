@@ -7,12 +7,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-personas',
+  selector: 'app-persona-list',
   imports: [MatTableModule, MatIconModule, MatTooltipModule, MatButtonModule, RouterLink],
-  templateUrl: './personas.component.html',
-  styleUrl: './personas.component.scss'
+  templateUrl: './persona-list.component.html',
+  styleUrl: './persona-list.component.scss'
 })
-export class PersonasComponent {
+export class PersonaListComponent {
   dataSource = new MatTableDataSource<any>([]);
   displayedColumns: string[] = ['documentType', 'documentNumber', 'firstName', 'lastName'];
 }
