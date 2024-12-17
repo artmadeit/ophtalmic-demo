@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 interface IdentifyDocument {
   value: string;
@@ -31,6 +32,7 @@ interface IdentifyDocument {
     MatSelectModule,
     MatIconModule,
     MatButtonModule,
+    MatTooltipModule,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './forms.component.html',
