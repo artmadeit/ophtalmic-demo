@@ -56,6 +56,9 @@
         <input matInput type="text" formControlName="address" />
       </mat-form-field>
     </mat-grid-list>
+    <div class="saveButton">
+      <button mat-flat-button>Guardar</button>
+    </div>
   </form>
   <div class="subheader">
     <h1>Historia clínica</h1>
@@ -65,12 +68,12 @@
   </div>
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource">
-      <!--abc-->
+      <!--Interview Number column-->
       <ng-container matColumnDef="interviewNumber">
         <th mat-header-cell *matHeaderCellDef>Número</th>
         <td mat-cell *matCellDef="let interview">{{ interview.number }}</td>
       </ng-container>
-      <!--abcd-->
+      <!--Interviw Date Column-->
       <ng-container matColumnDef="interviewDate">
         <th mat-header-cell *matHeaderCellDef>Fecha</th>
         <td mat-cell *matCellDef="let interview">{{ interview.date }}</td>

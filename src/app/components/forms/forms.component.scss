@@ -9,11 +9,6 @@
   margin-right: 10px;
 }
 
-// .input-m {
-
-//   margin-right: 10px;
-// }
-
 .container {
   margin: 20px;
 }
@@ -21,12 +16,14 @@
 .subheader {
   display: flex;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .btn {
   margin-left: 20px;
 }
 
-// mat-grid-tile {
-//   background: lightblue;
-// }
+.saveButton {
+  display: flex;
+  justify-content: flex-end;
+}
