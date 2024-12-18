@@ -15,6 +15,9 @@ import { Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
+import { Interview } from '../Interview';
 
 interface IdentifyDocument {
   value: string;
@@ -33,6 +36,7 @@ interface IdentifyDocument {
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,
+    MatTableModule,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './forms.component.html',
@@ -40,6 +44,8 @@ interface IdentifyDocument {
 })
 export class FormsComponent {
   personForm: FormGroup;
+  dataSource = new MatTableDataSource<Interview>([]);
+  displayedColumns = ['interviewNumber', 'interviewDate'];
 
   identifyDocuments: IdentifyDocument[] = [
     { value: 'id', viewValue: 'DNI' },
