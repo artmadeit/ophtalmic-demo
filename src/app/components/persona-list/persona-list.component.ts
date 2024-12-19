@@ -16,7 +16,7 @@ import { Persona } from '../Persona';
 })
 export class PersonaListComponent {
   dataSource = new MatTableDataSource<Persona>([]);
-  displayedColumns: string[] = ['documentType', 'documentNumber', 'firstName', 'lastName'];
+  displayedColumns: string[] = ['documentType', 'documentNumber', 'firstName', 'lastName', 'actions'];
 
   constructor(private personaService: PersonaService) {
     this.personaService.findAll(0, 10).subscribe(data => {
