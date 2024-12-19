@@ -1,34 +1,34 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Page } from './Page';
-import { Persona } from './Persona';
+import { Person } from './Person';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class PersonaService {
+export class PersonService {
   private baseUrl = 'http://localhost:3000/personas';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   findById(id: number) {
-    return this.http.get<Persona>(`${this.baseUrl}/${id}`);
+    return this.http.get<Person>(`${this.baseUrl}/${id}`);
   }
 
   findAll(page: number, size: number) {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
-    
-    return this.http.get<Page<Persona>>(`${this.baseUrl}/paginated`, { params });
+
+    return this.http.get<Page<Person>>(`${this.baseUrl}/paginated`, { params });
   }
 
-  register(persona: Persona) {
-    return this.http.post<Persona>(this.baseUrl, persona);
+  register(persona: Person) {
+    return this.http.post<Person>(this.baseUrl, persona);
   }
 
-  edit(id: number, persona: Persona) {
-    return this.http.put<Persona>(`${this.baseUrl}/${id}`, persona);
+  edit(id: number, persona: Person) {
+    return this.http.put<Person>(`${this.baseUrl}/${id}`, persona);
   }
 
   deleteById(id: number) {

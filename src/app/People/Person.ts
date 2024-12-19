@@ -1,5 +1,5 @@
 
-export interface Persona {
+export interface Person {
   id: number;
   documentType: string;
   documentNumber: string;

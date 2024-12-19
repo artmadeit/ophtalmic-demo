@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { FormsComponent } from './components/forms/forms.component';
-import { PersonaListComponent } from './components/persona-list/persona-list.component';
+import { FormsComponent } from './People/forms/forms.component';
+import { PersonListComponent } from './People/person-list/person-list.component';
 
 export const routes: Routes = [
   {
@@ -14,6 +14,6 @@ export const routes: Routes = [
   },
   {
     path: 'personas',
-    component: PersonaListComponent,
+    component: PersonListComponent,
   }
 ];
