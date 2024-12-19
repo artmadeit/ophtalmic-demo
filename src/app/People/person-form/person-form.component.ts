@@ -39,10 +39,10 @@ interface IdentifyDocument {
     MatTableModule,
   ],
   providers: [provideNativeDateAdapter()],
-  templateUrl: './forms.component.html',
-  styleUrl: './forms.component.scss',
+  templateUrl: './person-form.component.html',
+  styleUrl: './person-form.component.scss',
 })
-export class FormsComponent {
+export class PersonFormComponent {
   personForm: FormGroup;
   dataSource = new MatTableDataSource<Interview>([]);
   displayedColumns = ['interviewNumber', 'interviewDate'];

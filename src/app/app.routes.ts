@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { FormsComponent } from './People/forms/forms.component';
+import { PersonFormComponent } from './People/person-form/person-form.component';
 import { PersonListComponent } from './People/person-list/person-list.component';
 
 export const routes: Routes = [
@@ -10,10 +10,10 @@ export const routes: Routes = [
   },
   {
     path: 'personas/new',
-    component: FormsComponent,
+    component: PersonFormComponent,
   },
   {
     path: 'personas',
     component: PersonListComponent,
-  }
+  },
 ];
