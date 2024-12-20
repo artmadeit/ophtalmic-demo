@@ -18,6 +18,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTableModule } from '@angular/material/table';
 import { MatTableDataSource } from '@angular/material/table';
 import { Interview } from '../Interview';
+import { RouterLink } from '@angular/router';
 
 interface IdentifyDocument {
   value: string;
@@ -37,6 +38,7 @@ interface IdentifyDocument {
     MatButtonModule,
     MatTooltipModule,
     MatTableModule,
+    RouterLink,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './person-form.component.html',

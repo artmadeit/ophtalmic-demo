@@ -62,9 +62,11 @@
   </form>
   <div class="subheader">
     <h1>Historia clínica</h1>
-    <button class="btn" mat-fab color="primary" matTooltip="Registrar">
-      <mat-icon>add</mat-icon>
-    </button>
+    <a routerLink="/personas/new/interview">
+      <button class="btn" mat-fab color="primary" matTooltip="Registrar">
+        <mat-icon>add</mat-icon>
+      </button>
+    </a>
   </div>
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource">
