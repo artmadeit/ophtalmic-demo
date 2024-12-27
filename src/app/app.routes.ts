@@ -14,6 +14,10 @@ export const routes: Routes = [
     component: PersonFormComponent,
   },
   {
+    path: 'personas/:id',
+    component: PersonFormComponent,
+  },
+  {
     path: 'personas/new/interview',
     component: InterviewComponent,
   },
