@@ -18,11 +18,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTableModule } from '@angular/material/table';
 import { MatTableDataSource } from '@angular/material/table';
 import { Interview } from '../Interview';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { PersonService } from '../person.service';
 
-interface IdentifyDocument {
+interface DocumentType {
   value: string;
-  viewValue: string;
+  text: string;
 }
 @Component({
   selector: 'app-forms',
@@ -49,22 +50,27 @@ export class PersonFormComponent {
   dataSource = new MatTableDataSource<Interview>([]);
   displayedColumns = ['interviewNumber', 'interviewDate'];
 
-  identifyDocuments: IdentifyDocument[] = [
-    { value: 'id', viewValue: 'DNI' },
-    { value: 'passport', viewValue: 'PASAPORTE' },
-    { value: 'foreigner card', viewValue: 'CARNET DE EXTRANJERIA' },
+  documentTypes: DocumentType[] = [
+    { value: 'DNI', text: 'DNI' },
+    { value: 'PASSPORT', text: 'PASAPORTE' },
+    { value: 'FOREIGNER_CARD', text: 'CARNET DE EXTRANJERIA' },
   ];
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private personService: PersonService,
+    private router: Router
+  ) {
     this.personForm = fb.group({
-      name: ['', Validators.required],
+      firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      birthdate: '',
-      job: ['', Validators.required],
-      phone: ['', Validators.required],
-      idCard: ['', Validators.required],
-      email: ['', Validators.required, Validators.email],
-      address: ['', Validators.required],
+      documentType: ['', Validators.required],
+      documentNumber: ['', Validators.required],
+      birthDate: '',
+      job: [''],
+      phoneNumber: [''],
+      email: ['', [Validators.email]],
+      address: [''],
     });
   }
 
@@ -77,5 +83,12 @@ export class PersonFormComponent {
     const ageInMill = Date.now() - birthdate.getTime();
     const ageDate = new Date(ageInMill);
     return Math.abs(ageDate.getUTCFullYear() - 1970);
+  }
+
+  onSubmit() {
+    this.personService.register(this.personForm.value).subscribe((person) => {
+      alert('Persona registrada correctamente');
+      this.router.navigate(['/personas']);
+    });
   }
 }

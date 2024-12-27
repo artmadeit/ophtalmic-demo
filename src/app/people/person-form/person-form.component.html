@@ -1,24 +1,34 @@
 <div class="container">
-  <h1>Historia Optométrica</h1>
-  <form class="example-form" [formGroup]="personForm">
+  <form class="example-form" [formGroup]="personForm" (ngSubmit)="onSubmit()">
     <h2>Filiación</h2>
     <mat-grid-list cols="2" rowHeight="2:1" gutterSize="10px">
       <mat-form-field class="example-full-width">
         <mat-label>Nombres</mat-label>
-        <input matInput type="text" formControlName="name" />
+        <input matInput type="text" formControlName="firstName" />
       </mat-form-field>
       <mat-form-field class="example-full-width">
         <mat-label>Apellidos</mat-label>
         <input matInput type="text" formControlName="lastName" />
       </mat-form-field>
       <mat-form-field class="example-full-width">
+        <mat-label>Tipo de documento</mat-label>
+        <mat-select formControlName="documentType">
+          @for(documentType of documentTypes; track documentType) {
+          <mat-option [value]="documentType.value">{{
+            documentType.text
+            }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Número de documento</mat-label>
+        <input matInput type="text" formControlName="documentNumber" />
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
         <mat-label>Fecha de Nacimiento</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="birthdate" />
+        <input matInput [matDatepicker]="picker" formControlName="birthDate" />
         <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="picker"
-        ></mat-datepicker-toggle>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="example-full-width">
@@ -31,21 +41,7 @@
       </mat-form-field>
       <mat-form-field class="example-full-width">
         <mat-label>Número de teléfono</mat-label>
-        <input matInput type="tel" formControlName="phone" />
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <mat-label>Tipo de documento</mat-label>
-        <mat-select>
-          @for(identifyDocument of identifyDocuments; track identifyDocument) {
-          <mat-option [value]="identifyDocument.value">{{
-            identifyDocument.viewValue
-          }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <mat-label>Número de documento</mat-label>
-        <input matInput type="text" formControlName="idCard" />
+        <input matInput type="tel" formControlName="phoneNumber" />
       </mat-form-field>
       <mat-form-field class="example-full-width">
         <mat-label>Correo electrónico</mat-label>

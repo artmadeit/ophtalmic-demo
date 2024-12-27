@@ -7,7 +7,7 @@ import { Person } from './Person';
   providedIn: 'root',
 })
 export class PersonService {
-  private baseUrl = 'http://localhost:3000/personas';
+  private baseUrl = 'http://localhost:8080/people';
 
   constructor(private http: HttpClient) {}
 
@@ -20,7 +20,7 @@ export class PersonService {
       .set('page', page.toString())
       .set('size', size.toString());
 
-    return this.http.get<Page<Person>>(`${this.baseUrl}/paginated`, { params });
+    return this.http.get<Page<Person>>(`${this.baseUrl}`, { params });
   }
 
   register(persona: Person) {
