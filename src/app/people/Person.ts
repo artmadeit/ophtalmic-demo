@@ -5,4 +5,6 @@ export interface Person {
   documentNumber: string;
   firstName: string;
   lastName: string;
+  birthDate: Date;
+  
 }

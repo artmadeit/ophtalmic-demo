@@ -53,9 +53,10 @@
       </mat-form-field>
     </mat-grid-list>
     <div class="saveButtonBox">
-      <button mat-flat-button class="saveButton">Guardar</button>
+      <button mat-flat-button class="saveButton" type="submit">Guardar</button>
     </div>
   </form>
+  @if(isEditing) {
   <div class="subheader">
     <h1>Historia clínica</h1>
     <a routerLink="/personas/new/interview">
@@ -80,4 +81,5 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
   </div>
+  }
 </div>
