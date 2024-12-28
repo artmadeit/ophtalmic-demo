@@ -54,4 +54,10 @@ export class PersonListComponent implements AfterViewInit {
       this.totalElements = data.totalElements;
     });
   }
+
+  remove(id: number) {
+    this.personService.deleteById(id).subscribe(() => {
+      this.loadPersons();
+    });
+  }
 }
