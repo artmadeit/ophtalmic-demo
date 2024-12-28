@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Page } from './Page';
 import { Person } from './Person';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,10 +10,22 @@ import { Person } from './Person';
 export class PersonService {
   private baseUrl = 'http://localhost:8080/people';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   findById(id: number) {
-    return this.http.get<Person>(`${this.baseUrl}/${id}`);
+    return this.http.get(`${this.baseUrl}/${id}`).pipe(
+      map((person: any) => {
+        if (person.birthDate) {
+          person.birthDate = this.parseISO(person.birthDate);
+        }
+        return person as Person;
+      })
+    );
+  }
+
+  parseISO(dateString: string): Date {
+    const [year, month, day] = dateString.split('-').map(Number);
+    return new Date(year, month - 1, day);
   }
 
   findAll(page: number, size: number) {

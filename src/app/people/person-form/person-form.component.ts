@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -18,8 +18,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTableModule } from '@angular/material/table';
 import { MatTableDataSource } from '@angular/material/table';
 import { Interview } from '../Interview';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { PersonService } from '../person.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface DocumentType {
   value: string;
@@ -45,10 +46,13 @@ interface DocumentType {
   templateUrl: './person-form.component.html',
   styleUrl: './person-form.component.scss',
 })
-export class PersonFormComponent {
+export class PersonFormComponent implements OnInit {
   personForm: FormGroup;
   dataSource = new MatTableDataSource<Interview>([]);
   displayedColumns = ['interviewNumber', 'interviewDate'];
+  isEditing = false;
+  personId: number | null = null;
+  snackBar = inject(MatSnackBar);
 
   documentTypes: DocumentType[] = [
     { value: 'DNI', text: 'DNI' },
@@ -59,7 +63,8 @@ export class PersonFormComponent {
   constructor(
     private fb: FormBuilder,
     private personService: PersonService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.personForm = fb.group({
       firstName: ['', Validators.required],
@@ -74,8 +79,25 @@ export class PersonFormComponent {
     });
   }
 
+  ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id && id !== 'new') {
+      this.isEditing = true;
+      this.personId = parseInt(id);
+      this.loadPerson();
+    }
+  }
+
+  private loadPerson() {
+    if (this.personId) {
+      this.personService.findById(this.personId).subscribe(person => {
+        this.personForm.patchValue(person);
+      });
+    }
+  }
+
   get age(): number | null {
-    const birthdate = this.personForm.get('birthdate')?.value;
+    const birthdate = this.personForm.get('birthDate')?.value;
     if (!birthdate) {
       return null;
     }
@@ -86,9 +108,15 @@ export class PersonFormComponent {
   }
 
   onSubmit() {
-    this.personService.register(this.personForm.value).subscribe((person) => {
-      alert('Persona registrada correctamente');
-      this.router.navigate(['/personas']);
-    });
+    if (this.isEditing && this.personId) {
+      this.personService.edit(this.personId, this.personForm.value).subscribe(() => {
+        this.snackBar.open('Persona actualizada correctamente');
+      });
+    } else {
+      this.personService.register(this.personForm.value).subscribe((person) => {
+        this.snackBar.open('Persona registrada correctamente');
+        this.router.navigate(['/personas', person.id]);
+      });
+    }
   }
 }
