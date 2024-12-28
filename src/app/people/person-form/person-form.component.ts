@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -20,6 +20,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Interview } from '../Interview';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { PersonService } from '../person.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface DocumentType {
   value: string;
@@ -51,6 +52,7 @@ export class PersonFormComponent implements OnInit {
   displayedColumns = ['interviewNumber', 'interviewDate'];
   isEditing = false;
   personId: number | null = null;
+  snackBar = inject(MatSnackBar);
 
   documentTypes: DocumentType[] = [
     { value: 'DNI', text: 'DNI' },
@@ -108,11 +110,11 @@ export class PersonFormComponent implements OnInit {
   onSubmit() {
     if (this.isEditing && this.personId) {
       this.personService.edit(this.personId, this.personForm.value).subscribe(() => {
-        alert('Persona actualizada correctamente');
+        this.snackBar.open('Persona actualizada correctamente');
       });
     } else {
       this.personService.register(this.personForm.value).subscribe((person) => {
-        alert('Persona registrada correctamente');
+        this.snackBar.open('Persona registrada correctamente');
         this.router.navigate(['/personas', person.id]);
       });
     }
