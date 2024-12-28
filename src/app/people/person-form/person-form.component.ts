@@ -109,12 +109,11 @@ export class PersonFormComponent implements OnInit {
     if (this.isEditing && this.personId) {
       this.personService.edit(this.personId, this.personForm.value).subscribe(() => {
         alert('Persona actualizada correctamente');
-        this.router.navigate(['/personas']);
       });
     } else {
-      this.personService.register(this.personForm.value).subscribe(() => {
+      this.personService.register(this.personForm.value).subscribe((person) => {
         alert('Persona registrada correctamente');
-        this.router.navigate(['/personas']);
+        this.router.navigate(['/personas', person.id]);
       });
     }
   }
