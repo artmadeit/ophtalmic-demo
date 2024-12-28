@@ -1,14 +1,15 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginator, MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
-import { PersonService } from '../person.service';
-import { Person } from '../Person';
+import { ConfirmDialogComponent } from '../../common/components/confirm-dialog/confirm-dialog.component';
 import { MatSpanishPaginator } from '../../common/MatSpanishPaginator';
+import { Person } from '../Person';
+import { PersonService } from '../person.service';
 
 @Component({
   selector: 'app-persona-list',
@@ -19,7 +20,7 @@ import { MatSpanishPaginator } from '../../common/MatSpanishPaginator';
     MatTooltipModule,
     MatButtonModule,
     MatPaginatorModule,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './person-list.component.html',
   styleUrl: './person-list.component.scss',
@@ -33,6 +34,7 @@ export class PersonListComponent implements AfterViewInit {
   totalElements = 0;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  readonly dialog = inject(MatDialog);
 
   constructor(private personService: PersonService) {
     this.dataSource = new MatTableDataSource<Person>([]);
@@ -56,8 +58,16 @@ export class PersonListComponent implements AfterViewInit {
   }
 
   remove(id: number) {
-    this.personService.deleteById(id).subscribe(() => {
-      this.loadPersons();
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: { message: '¿Estás seguro de que deseas eliminar esta persona?' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.personService.deleteById(id).subscribe(() => {
+          this.loadPersons();
+        });
+      }
     });
   }
 }
