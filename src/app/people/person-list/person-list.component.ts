@@ -4,10 +4,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { RouterLink } from '@angular/router';
 import { PersonService } from '../person.service';
 import { Person } from '../Person';
+import { MatSpanishPaginator } from '../../common/MatSpanishPaginator';
 
 @Component({
   selector: 'app-persona-list',
@@ -21,7 +22,10 @@ import { Person } from '../Person';
     RouterLink
   ],
   templateUrl: './person-list.component.html',
-  styleUrl: './person-list.component.scss'
+  styleUrl: './person-list.component.scss',
+  providers: [
+    { provide: MatPaginatorIntl, useClass: MatSpanishPaginator }
+  ]
 })
 export class PersonListComponent implements AfterViewInit {
   dataSource: MatTableDataSource<Person>;
