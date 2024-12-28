@@ -1,12 +1,26 @@
-<style></style>
-
-<main class="main">
+<!-- <main class="main">
   <div class="content">
     <div class="left-side">
       <h1>{{ title }}</h1>
       <p>Visión perfecta y completa</p>
     </div>    
   </div>
-</main>
+</main> -->
 
+<mat-toolbar>
+  <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button> -->
+  <span>Ophtalmic Center</span>
+  <span class="example-spacer"></span>
+  <div style="display: flex; align-items: center; gap: 1rem;">
+    <div style="font-size: 1.2rem;">
+      {{user.name}}
+    </div>
+    <button mat-button (click)="logout()">
+      Cerrar sesión
+      <mat-icon iconPositionEnd>logout</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
 <router-outlet />

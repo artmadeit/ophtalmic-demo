@@ -75,7 +75,7 @@ export class PersonFormComponent {
   }
 
   get age(): number | null {
-    const birthdate = this.personForm.get('birthdate')?.value;
+    const birthdate = this.personForm.get('birthDate')?.value;
     if (!birthdate) {
       return null;
     }
