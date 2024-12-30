@@ -3,6 +3,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ContactLenses } from '../ContactLenses';
+import { VisualAcuity } from '../VisualAcuity';
 
 @Component({
   selector: 'app-interview',
@@ -29,4 +30,25 @@ export class InterviewComponent {
     },
   ]);
   displayedColumns = ['fieldName', 'cLensesOD', 'cLensesOI'];
+
+  dataSourceVAcuity = new MatTableDataSource<VisualAcuity>([
+    {
+      fieldItem: 'OD',
+      vAcuitySC: '',
+      vAcuityCC: '',
+      vAcuityOP: '',
+    },
+    {
+      fieldItem: 'OI',
+      vAcuitySC: '',
+      vAcuityCC: '',
+      vAcuityOP: '',
+    },
+  ]);
+  displayedColumnsVAcuity = [
+    'fieldItem',
+    'vAcuitySC',
+    'vAcuityCC',
+    'vAcuityOP',
+  ];
 }
