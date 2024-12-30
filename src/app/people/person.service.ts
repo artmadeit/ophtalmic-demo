@@ -28,10 +28,11 @@ export class PersonService {
     return new Date(year, month - 1, day);
   }
 
-  findAll(page: number, size: number) {
+  findAll(page: number, size: number, searchText: string) {
     let params = new HttpParams()
       .set('page', page.toString())
-      .set('size', size.toString());
+      .set('size', size.toString())
+      .set('searchText', searchText);
 
     return this.http.get<Page<Person>>(`${this.baseUrl}`, { params });
   }

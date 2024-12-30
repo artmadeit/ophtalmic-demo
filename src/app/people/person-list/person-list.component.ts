@@ -10,6 +10,10 @@ import { ConfirmDialogComponent } from '../../common/components/confirm-dialog/c
 import { MatSpanishPaginator } from '../../common/MatSpanishPaginator';
 import { Person } from '../Person';
 import { PersonService } from '../person.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-persona-list',
@@ -21,6 +25,8 @@ import { PersonService } from '../person.service';
     MatButtonModule,
     MatPaginatorModule,
     RouterLink,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   templateUrl: './person-list.component.html',
   styleUrl: './person-list.component.scss',
@@ -32,12 +38,24 @@ export class PersonListComponent implements AfterViewInit {
   dataSource: MatTableDataSource<Person>;
   displayedColumns: string[] = ['documentType', 'documentNumber', 'firstName', 'lastName', 'actions'];
   totalElements = 0;
+  private searchSubject = new Subject<string>();
+  private searchText = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   readonly dialog = inject(MatDialog);
 
   constructor(private personService: PersonService) {
     this.dataSource = new MatTableDataSource<Person>([]);
+    
+    this.searchSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      takeUntilDestroyed()
+    ).subscribe(searchValue => {
+      this.searchText = searchValue;
+      this.paginator?.firstPage();
+      this.loadPersons();
+    });
   }
 
   ngAfterViewInit() {
@@ -47,11 +65,16 @@ export class PersonListComponent implements AfterViewInit {
     });
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.searchSubject.next(filterValue.trim().toLowerCase());
+  }
+
   private loadPersons() {
     const pageIndex = this.paginator?.pageIndex ?? 0;
     const pageSize = this.paginator?.pageSize ?? 10;
-    
-    this.personService.findAll(pageIndex, pageSize).subscribe(data => {
+
+    this.personService.findAll(pageIndex, pageSize, this.searchText).subscribe(data => {
       this.dataSource.data = data.content;
       this.totalElements = data.totalElements;
     });
