@@ -71,7 +71,7 @@
         <ng-container matColumnDef="cLensesOD">
           <th mat-header-cell *matHeaderCellDef>OD</th>
           <td mat-cell *matCellDef="let element">
-            <mat-form-field class="example-full-width">
+            <mat-form-field>
               <input matInput type="text" />
             </mat-form-field>
           </td>
@@ -80,7 +80,7 @@
         <ng-container matColumnDef="cLensesOI">
           <th mat-header-cell *matHeaderCellDef>OI</th>
           <td mat-cell *matCellDef="let element">
-            <mat-form-field class="example-full-width">
+            <mat-form-field>
               <input matInput type="text" />
             </mat-form-field>
           </td>
@@ -99,18 +99,49 @@
         </ng-container>
         <ng-container matColumnDef="vAcuitySC">
           <th mat-header-cell *matHeaderCellDef>SC</th>
-          <td mat-cell></td>
+          <td mat-cell *matCellDef="let element">
+            <mat-form-field>
+              <input matInput type="text" />
+            </mat-form-field>
+          </td>
         </ng-container>
         <ng-container matColumnDef="vAcuityCC">
           <th mat-header-cell *matHeaderCellDef>CC</th>
-          <td mat-cell></td>
+          <td mat-cell *matCellDef="let element">
+            <mat-form-field>
+              <input matInput type="text" />
+            </mat-form-field>
+          </td>
         </ng-container>
         <ng-container matColumnDef="vAcuityOP">
           <th mat-header-cell *matHeaderCellDef>Precisión ocular</th>
-          <td mat-cell></td>
+          <td mat-cell *matCellDef="let element">
+            <mat-form-field>
+              <input matInput type="text" />
+            </mat-form-field>
+          </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumnsVAcuity"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumnsVAcuity"></tr>
+      </table>
+    </div>
+    <div>
+      <h3>Polo anterior</h3>
+      <table mat-table [dataSource]="dataSourceAPole">
+        <ng-container matColumnDef="fieldItemPole">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">{{ element.fieldItemPole }}</td>
+        </ng-container>
+        <ng-container matColumnDef="aPoleOD">
+          <th mat-header-cell *matHeaderCellDef>OD</th>
+          <td mat-cell *matCellDef="let element"></td>
+        </ng-container>
+        <ng-container matColumnDef="aPoleOI">
+          <th mat-header-cell *matHeaderCellDef>OI</th>
+          <td mat-cell *matCellDef="let element"></td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsAPole"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsAPole"></tr>
       </table>
     </div>
   </form>

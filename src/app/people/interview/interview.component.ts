@@ -4,6 +4,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ContactLenses } from '../ContactLenses';
 import { VisualAcuity } from '../VisualAcuity';
+import { AnteriorPole } from '../AnteriorPole';
 
 @Component({
   selector: 'app-interview',
@@ -51,4 +52,23 @@ export class InterviewComponent {
     'vAcuityCC',
     'vAcuityOP',
   ];
+
+  dataSourceAPole = new MatTableDataSource<AnteriorPole>([
+    {
+      fieldItemPole: 'Parpados',
+      aPoleOD: '',
+      aPoleOI: '',
+    },
+    {
+      fieldItemPole: 'Conjuntiva',
+      aPoleOD: '',
+      aPoleOI: '',
+    },
+    {
+      fieldItemPole: 'Cornea',
+      aPoleOD: '',
+      aPoleOI: '',
+    },
+  ]);
+  displayedColumnsAPole = ['fieldItemPole', 'aPoleOD', 'aPoleOI'];
 }
