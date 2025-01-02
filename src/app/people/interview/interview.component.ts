@@ -105,7 +105,7 @@ export class InterviewComponent {
       pPoleOI: '',
     },
     {
-      fieldItemPPole: 'Macula',
+      fieldItemPPole: 'Mácula',
       pPoleOD: '',
       pPoleOI: '',
     },

@@ -136,11 +136,19 @@
         </ng-container>
         <ng-container matColumnDef="aPoleOD">
           <th mat-header-cell *matHeaderCellDef>OD</th>
-          <td mat-cell *matCellDef="let element"></td>
+          <td mat-cell *matCellDef="let element">
+            <mat-form-field>
+              <input matInput type="text" />
+            </mat-form-field>
+          </td>
         </ng-container>
         <ng-container matColumnDef="aPoleOI">
           <th mat-header-cell *matHeaderCellDef>OI</th>
-          <td mat-cell *matCellDef="let element"></td>
+          <td mat-cell *matCellDef="let element">
+            <mat-form-field>
+              <input matInput type="text" />
+            </mat-form-field>
+          </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumnsAPole"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumnsAPole"></tr>
@@ -157,11 +165,19 @@
         </ng-container>
         <ng-container matColumnDef="pPoleOD">
           <th mat-header-cell *matHeaderCellDef>OD</th>
-          <td mat-cell *matCellDef="let element"></td>
+          <td mat-cell *matCellDef="let element">
+            <mat-form-field>
+              <input matInput type="text" />
+            </mat-form-field>
+          </td>
         </ng-container>
         <ng-container matColumnDef="pPoleOI">
           <th mat-header-cell *matHeaderCellDef>OI</th>
-          <td mat-cell *matCellDef="let element"></td>
+          <td mat-cell *matCellDef="let element">
+            <mat-form-field>
+              <input matInput type="text">
+            </mat-form-field>
+          </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumnsPPole"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumnsPPole"></tr>
