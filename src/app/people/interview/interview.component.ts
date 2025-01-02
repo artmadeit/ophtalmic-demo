@@ -5,6 +5,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ContactLenses } from '../ContactLenses';
 import { VisualAcuity } from '../VisualAcuity';
 import { AnteriorPole } from '../AnteriorPole';
+import { PosteriorPole } from '../PosteriorPole';
 
 @Component({
   selector: 'app-interview',
@@ -69,6 +70,50 @@ export class InterviewComponent {
       aPoleOD: '',
       aPoleOI: '',
     },
+    {
+      fieldItemPole: 'Iris',
+      aPoleOD: '',
+      aPoleOI: '',
+    },
+    {
+      fieldItemPole: 'Pupila',
+      aPoleOD: '',
+      aPoleOI: '',
+    },
+    {
+      fieldItemPole: 'Cámara anterior',
+      aPoleOD: '',
+      aPoleOI: '',
+    },
+    {
+      fieldItemPole: 'Cristalino',
+      aPoleOD: '',
+      aPoleOI: '',
+    },
   ]);
   displayedColumnsAPole = ['fieldItemPole', 'aPoleOD', 'aPoleOI'];
+
+  dataSourcePPole = new MatTableDataSource<PosteriorPole>([
+    {
+      fieldItemPPole: 'Vítreo',
+      pPoleOD: '',
+      pPoleOI: '',
+    },
+    {
+      fieldItemPPole: 'Nervio óptico',
+      pPoleOD: '',
+      pPoleOI: '',
+    },
+    {
+      fieldItemPPole: 'Macula',
+      pPoleOD: '',
+      pPoleOI: '',
+    },
+    {
+      fieldItemPPole: 'Retina periférica',
+      pPoleOD: '',
+      pPoleOI: '',
+    },
+  ]);
+  displayedColumnsPPole = ['fieldItemPPole', 'pPoleOD', 'pPoleOI'];
 }
