@@ -6,6 +6,7 @@ import { ContactLenses } from '../ContactLenses';
 import { VisualAcuity } from '../VisualAcuity';
 import { AnteriorPole } from '../AnteriorPole';
 import { PosteriorPole } from '../PosteriorPole';
+import { OcularMotility } from '../OcularMotility';
 
 @Component({
   selector: 'app-interview',
@@ -116,4 +117,32 @@ export class InterviewComponent {
     },
   ]);
   displayedColumnsPPole = ['fieldItemPPole', 'pPoleOD', 'pPoleOI'];
+
+  dataSourceOM = new MatTableDataSource<OcularMotility>([
+    {
+      fieldItemOM: 'Kappa',
+      OcularMotilityOD: '',
+      OcularMotilityOI: '',
+    },
+    {
+      fieldItemOM: 'Hirschberg',
+      OcularMotilityOD: '',
+      OcularMotilityOI: '',
+    },
+    {
+      fieldItemOM: 'CoverTest',
+      OcularMotilityOD: '',
+      OcularMotilityOI: '',
+    },
+    {
+      fieldItemOM: 'PPC',
+      OcularMotilityOD: '',
+      OcularMotilityOI: '',
+    },
+  ]);
+  displayedColumnsOMotility = [
+    'fieldItemOM',
+    'OcularMotilityOD',
+    'OcularMotilityOI',
+  ];
 }
