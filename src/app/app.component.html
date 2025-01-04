@@ -15,20 +15,34 @@
   <span class="example-spacer"></span>
   <div style="display: flex; align-items: center; gap: 1rem;">
     @if (auth.isAuthenticated$ | async) {
-      @if (auth.user$ | async; as user) {
-        <div style="font-size: 1.2rem;">
-          {{user.name}}
-        </div>
-      }
-      <button mat-button (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
-        Cerrar sesión
-        <mat-icon iconPositionEnd>logout</mat-icon>
-      </button>
+    @if (auth.user$ | async; as user) {
+    <div style="font-size: 1.2rem;">
+      {{user.name}}
+    </div>
+    }
+    <button mat-button (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
+      Cerrar sesión
+      <mat-icon iconPositionEnd>logout</mat-icon>
+    </button>
     } @else {
-      <button mat-button (click)="auth.loginWithRedirect()">Iniciar sesión</button>
+    <button mat-button (click)="auth.loginWithRedirect()">Iniciar sesión</button>
     }
   </div>
 </mat-toolbar>
 <div style="margin: 20px;">
-  <router-outlet />
+  @if (auth.isAuthenticated$ | async) {
+    <router-outlet />
+  } @else {
+  <div style="text-align: center; padding: 8rem 2rem;">
+    <h1 style="font-size: 3rem; margin-bottom: 1.5rem;">Bienvenido a su Sistema de Historia Clínica Oftalmológica</h1>
+    <p style="font-size: 1.5rem; color: #666; margin-bottom: 2rem;">
+      Gestione de manera eficiente y segura los registros médicos de sus pacientes.
+      Una solución integral para profesionales de la salud visual.
+    </p>
+    <button mat-raised-button color="primary" (click)="auth.loginWithRedirect()" style="padding: 0.75rem 2rem; font-size: 1.2rem;">
+      Comenzar ahora
+      <mat-icon iconPositionEnd>arrow_forward</mat-icon>
+    </button>
+  </div>
+  }
 </div>
