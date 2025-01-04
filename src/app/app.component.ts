@@ -1,21 +1,17 @@
-import { Component } from '@angular/core';
+import { AsyncPipe, DOCUMENT } from '@angular/common';
+import { Component, Inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, MatToolbarModule, MatButtonModule, MatIconModule],
+  imports: [RouterOutlet, RouterLink, MatToolbarModule, MatButtonModule, MatIconModule, AsyncPipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  user = {
-    name: 'Arthur',
-  };
-
-  logout() {
-    alert('TODO: logout');
-  }
+  constructor(@Inject(DOCUMENT) public document: Document, public auth: AuthService) {}
 }

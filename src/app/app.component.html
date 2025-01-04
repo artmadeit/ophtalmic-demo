@@ -14,13 +14,19 @@
   <a routerLink="/" style="text-decoration: none;">Ophtalmic Center</a>
   <span class="example-spacer"></span>
   <div style="display: flex; align-items: center; gap: 1rem;">
-    <div style="font-size: 1.2rem;">
-      {{user.name}}
-    </div>
-    <button mat-button (click)="logout()">
-      Cerrar sesión
-      <mat-icon iconPositionEnd>logout</mat-icon>
-    </button>
+    @if (auth.isAuthenticated$ | async) {
+      @if (auth.user$ | async; as user) {
+        <div style="font-size: 1.2rem;">
+          {{user.name}}
+        </div>
+      }
+      <button mat-button (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
+        Cerrar sesión
+        <mat-icon iconPositionEnd>logout</mat-icon>
+      </button>
+    } @else {
+      <button mat-button (click)="auth.loginWithRedirect()">Iniciar sesión</button>
+    }
   </div>
 </mat-toolbar>
 <div style="margin: 20px;">

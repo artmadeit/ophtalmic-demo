@@ -4,6 +4,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { provideAuth0 } from '@auth0/auth0-angular';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,6 +17,13 @@ export const appConfig: ApplicationConfig = {
       useValue: {
         duration: 2000
       }
-    }
+    },
+    provideAuth0({
+      domain: 'ophtalmic-center.us.auth0.com',
+      clientId: 'McskgK1cuSpxuzcMiWQUUDgAgrq38NHp',
+      authorizationParams: {
+        redirect_uri: window.location.origin
+      }
+    }),
   ]
 };
