@@ -22,7 +22,9 @@ export const appConfig: ApplicationConfig = {
       domain: 'ophtalmic-center.us.auth0.com',
       clientId: 'McskgK1cuSpxuzcMiWQUUDgAgrq38NHp',
       authorizationParams: {
-        redirect_uri: window.location.origin
+        redirect_uri: window.location.origin,
+        audience: "https://www.ouracademy-ophtalmiccenter.com",
+        organization: "org_nXCtaCPT1JLroGw9",
       }
     }),
   ]
