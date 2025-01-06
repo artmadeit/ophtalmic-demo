@@ -7,6 +7,7 @@ import { VisualAcuity } from '../VisualAcuity';
 import { AnteriorPole } from '../AnteriorPole';
 import { PosteriorPole } from '../PosteriorPole';
 import { OcularMotility } from '../OcularMotility';
+import { Keratrometry } from '../Keratrometry';
 
 @Component({
   selector: 'app-interview',
@@ -145,4 +146,18 @@ export class InterviewComponent {
     'OcularMotilityOD',
     'OcularMotilityOI',
   ];
+
+  dataSourceK = new MatTableDataSource<Keratrometry>([
+    {
+      fieldItemK: 'K1',
+      KeratrometryOD: '',
+      KeratrometryOI: '',
+    },
+    {
+      fieldItemK: 'K2',
+      KeratrometryOD: '',
+      KeratrometryOI: '',
+    },
+  ]);
+  displayedColumnsK = ['fieldItemK', 'KeratrometryOD', 'KeratrometryOI'];
 }
