@@ -1,6 +1,6 @@
 <form class="example-form" [formGroup]="personForm" (ngSubmit)="onSubmit()">
-  <h1>Historia Optométrica</h1>  
-  <h2>1. Filiación</h2>
+  <h1>Datos Personales</h1>  
+  <h2>Filiación</h2>
   <mat-grid-list cols="2" rowHeight="2:1" gutterSize="10px">
     <mat-form-field class="example-full-width">
       <mat-label>Nombres</mat-label>
@@ -52,7 +52,7 @@
       <input matInput type="text" formControlName="address" />
     </mat-form-field>
     <mat-radio-group [(ngModel)]="labelPosition">
-      <label>Es usted especialista?</label>
+      <label>Es especialista?</label>
       <mat-radio-button value="yes">Si</mat-radio-button>
       <mat-radio-button value="no">No</mat-radio-button>
     </mat-radio-group>
