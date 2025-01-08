@@ -9,7 +9,7 @@
 
 <mat-form-field>
   <mat-label>Buscar por nombre, apellido o número de documento</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Ejemplo. Alex, 12345678" #input>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Ejemplo. Alex, 12345678" #input> 
 </mat-form-field>
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource">

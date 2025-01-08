@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, model, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -21,6 +21,7 @@ import { Interview } from '../Interview';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { PersonService } from '../person.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatRadioModule } from '@angular/material/radio';
 
 interface DocumentType {
   value: string;
@@ -35,6 +36,7 @@ interface DocumentType {
     MatDatepickerModule,
     ReactiveFormsModule,
     MatGridListModule,
+    MatRadioModule,
     MatSelectModule,
     MatIconModule,
     MatButtonModule,
@@ -90,11 +92,13 @@ export class PersonFormComponent implements OnInit {
 
   private loadPerson() {
     if (this.personId) {
-      this.personService.findById(this.personId).subscribe(person => {
+      this.personService.findById(this.personId).subscribe((person) => {
         this.personForm.patchValue(person);
       });
     }
   }
+
+  readonly labelPosition = model<'no' | 'yes'>('yes');
 
   get age(): number | null {
     const birthdate = this.personForm.get('birthDate')?.value;
@@ -109,9 +113,11 @@ export class PersonFormComponent implements OnInit {
 
   onSubmit() {
     if (this.isEditing && this.personId) {
-      this.personService.edit(this.personId, this.personForm.value).subscribe(() => {
-        this.snackBar.open('Persona actualizada correctamente');
-      });
+      this.personService
+        .edit(this.personId, this.personForm.value)
+        .subscribe(() => {
+          this.snackBar.open('Persona actualizada correctamente');
+        });
     } else {
       this.personService.register(this.personForm.value).subscribe((person) => {
         this.snackBar.open('Persona registrada correctamente');
