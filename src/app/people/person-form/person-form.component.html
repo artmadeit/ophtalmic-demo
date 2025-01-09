@@ -51,10 +51,10 @@
       <mat-label>Domicilio</mat-label>
       <input matInput type="text" formControlName="address" />
     </mat-form-field>
-    <mat-radio-group [(ngModel)]="labelPosition">
+    <mat-radio-group formControlName="isSpecialist">
       <label>Es especialista?</label>
-      <mat-radio-button value="yes">Si</mat-radio-button>
-      <mat-radio-button value="no">No</mat-radio-button>
+      <mat-radio-button [value]="true">Si</mat-radio-button>
+      <mat-radio-button [value]="false">No</mat-radio-button>
     </mat-radio-group>
   </mat-grid-list>
   <div class="saveButtonBox">

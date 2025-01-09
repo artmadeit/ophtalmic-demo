@@ -78,6 +78,7 @@ export class PersonFormComponent implements OnInit {
       phoneNumber: [''],
       email: ['', [Validators.email]],
       address: [''],
+      isSpecialist: [false, [Validators.required]],
     });
   }
 
@@ -97,8 +98,6 @@ export class PersonFormComponent implements OnInit {
       });
     }
   }
-
-  readonly labelPosition = model<'no' | 'yes'>('yes');
 
   get age(): number | null {
     const birthdate = this.personForm.get('birthDate')?.value;
