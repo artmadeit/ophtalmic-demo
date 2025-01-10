@@ -1,5 +1,6 @@
-export interface ContactLenses {
+export interface EyesDynamicFields {
+  label: string;
   fieldName: string;
-  cLensesOD: string;
-  cLensesOI: string;
+  od: string;
+  oi: string;
 }
