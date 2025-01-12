@@ -76,7 +76,7 @@ export class PersonListComponent implements AfterViewInit {
 
     this.personService.findAll(pageIndex, pageSize, this.searchText).subscribe(data => {
       this.dataSource.data = data.content;
-      this.totalElements = data.totalElements;
+      this.totalElements = data.page.totalElements;
     });
   }
 
