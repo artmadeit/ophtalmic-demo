@@ -104,8 +104,12 @@
         <ng-container matColumnDef="sc">
           <th mat-header-cell *matHeaderCellDef>SC</th>
           <td mat-cell *matCellDef="let element">
-            <mat-form-field>
-              <input matInput type="text" />
+            <mat-form-field formGroupName="sc">
+              <input
+                matInput
+                type="text"
+                [formControlName]="element.fieldName"
+              />
             </mat-form-field>
           </td>
         </ng-container>
@@ -263,10 +267,11 @@
       <!-- <mat-select>
         <mat-option></mat-option>
       </mat-select> -->
+      <div>
+        <button>Especialista</button>
+      </div>
 
-      <button>Especialista</button>
-
-      <button mat-button type="submit">Guardar</button>
+      <button mat-flat-button type="submit">Guardar</button>
     </div>
   </form>
 </div>

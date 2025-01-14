@@ -3,6 +3,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { EyesDynamicFields } from '../ContactLenses';
+import { MatButtonModule } from '@angular/material/button';
 import { VisualAcuity } from '../VisualAcuity';
 import { AnteriorPole } from '../AnteriorPole';
 import { PosteriorPole } from '../PosteriorPole';
@@ -14,6 +15,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-interview',
@@ -22,6 +24,7 @@ import {
     MatInputModule,
     MatTableModule,
     ReactiveFormsModule,
+    MatButtonModule,
   ],
   templateUrl: './interview.component.html',
   styleUrl: './interview.component.scss',
