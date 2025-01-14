@@ -47,14 +47,29 @@ export class InterviewComponent {
       curvaBase: this.eyes(fb),
       diametro: this.eyes(fb),
 
+      // agudeza visual
+      sc: this.eyes(fb),
+      cc: this.eyes(fb),
+      presicionOcular: this.eyes(fb),
+
       // queratometria
       k1: this.eyes(fb),
       k2: this.eyes(fb),
 
-      // agudeza visual
-      sc: this.eyes(fb),
-      cc: this.eyes(fb),
-      presicionOcular: this.eyes(fb)
+      //Polo anterior
+      parpados: this.eyes(fb),
+      conjuntiva: this.eyes(fb),
+      cornea: this.eyes(fb),
+      iris: this.eyes(fb),
+      pupila: this.eyes(fb),
+      camaraAnterior: this.eyes(fb),
+      cristalino: this.eyes(fb),
+
+      //Polo posterior
+      vitreo: this.eyes(fb),
+      nervioOptico: this.eyes(fb),
+      macula: this.eyes(fb),
+      retinaPeriferica: this.eyes(fb),
     });
   }
 
@@ -81,78 +96,84 @@ export class InterviewComponent {
   displayedColumns = ['label', 'od', 'oi'];
 
   dataSourceVAcuity = new MatTableDataSource<any>([
-    { fieldName: 'od', label: "OD"}, 
-    { fieldName: 'oi', label: "OI"} 
+    { fieldName: 'od', label: 'OD' },
+    { fieldName: 'oi', label: 'OI' },
   ]);
-  displayedColumnsVAcuity = [
-    'eye',
-    'sc',
-    'cc',
-    'presicionOcular',
-  ];
+  displayedColumnsVAcuity = ['eye', 'sc', 'cc', 'presicionOcular'];
 
-  dataSourceAPole = new MatTableDataSource<AnteriorPole>([
+  dataSourceAPole = new MatTableDataSource<EyesDynamicFields>([
     {
-      fieldItemPole: 'Parpados',
-      aPoleOD: '',
-      aPoleOI: '',
+      label: 'Parpados',
+      fieldName: 'parpados',
+      od: '',
+      oi: '',
     },
     {
-      fieldItemPole: 'Conjuntiva',
-      aPoleOD: '',
-      aPoleOI: '',
+      label: 'Conjuntiva',
+      fieldName: 'conjuntiva',
+      od: '',
+      oi: '',
     },
     {
-      fieldItemPole: 'Cornea',
-      aPoleOD: '',
-      aPoleOI: '',
+      label: 'Cornea',
+      fieldName: 'cornea',
+      od: '',
+      oi: '',
     },
     {
-      fieldItemPole: 'Iris',
-      aPoleOD: '',
-      aPoleOI: '',
+      label: 'Iris',
+      fieldName: 'iris',
+      od: '',
+      oi: '',
     },
     {
-      fieldItemPole: 'Pupila',
-      aPoleOD: '',
-      aPoleOI: '',
+      label: 'Pupila',
+      fieldName: 'pupila',
+      od: '',
+      oi: '',
     },
     {
-      fieldItemPole: 'Cámara anterior',
-      aPoleOD: '',
-      aPoleOI: '',
+      label: 'Cámara anterior',
+      fieldName: 'camaraAnterior',
+      od: '',
+      oi: '',
     },
     {
-      fieldItemPole: 'Cristalino',
-      aPoleOD: '',
-      aPoleOI: '',
+      label: 'Cristalino',
+      fieldName: 'cristalino',
+      od: '',
+      oi: '',
     },
   ]);
-  displayedColumnsAPole = ['fieldItemPole', 'aPoleOD', 'aPoleOI'];
+  displayedColumnsAPole = ['label', 'od', 'oi'];
 
-  dataSourcePPole = new MatTableDataSource<PosteriorPole>([
+  dataSourcePPole = new MatTableDataSource<EyesDynamicFields>([
     {
-      fieldItemPPole: 'Vítreo',
-      pPoleOD: '',
-      pPoleOI: '',
+      label: 'Vítreo',
+      fieldName: 'vitreo',
+      od: '',
+      oi: '',
     },
     {
-      fieldItemPPole: 'Nervio óptico',
-      pPoleOD: '',
-      pPoleOI: '',
+      label: 'Nervio óptico',
+      fieldName: 'nervioOptico',
+      od: '',
+      oi: '',
     },
     {
-      fieldItemPPole: 'Mácula',
-      pPoleOD: '',
-      pPoleOI: '',
+      label: 'Mácula',
+      fieldName: 'macula',
+      od: '',
+      oi: '',
     },
     {
-      fieldItemPPole: 'Retina periférica',
-      pPoleOD: '',
-      pPoleOI: '',
+      label: 'Retina periférica',
+      fieldName: 'retinaPeriferica',
+      od: '',
+      oi: '',
     },
   ]);
-  displayedColumnsPPole = ['fieldItemPPole', 'pPoleOD', 'pPoleOI'];
+  displayedColumnsPPole = ['label', 'od', 'oi'];
 
   dataSourceOM = new MatTableDataSource<OcularMotility>([
     {
@@ -184,28 +205,27 @@ export class InterviewComponent {
 
   dataSourceK = new MatTableDataSource<EyesDynamicFields>([
     {
-      label: "K1",
+      label: 'K1',
       fieldName: 'k1',
       od: '',
       oi: '',
     },
     {
-      label: "K2",
+      label: 'K2',
       fieldName: 'k2',
       od: '',
       oi: '',
     },
   ]);
 
-
   private eyes(fb: FormBuilder) {
     return fb.group({
       od: [''],
-      oi: ['']
+      oi: [''],
     });
   }
 
   onSubmit() {
-    console.log(this.interviewForm.value)
+    console.log(this.interviewForm.value);
   }
 }

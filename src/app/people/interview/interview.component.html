@@ -1,6 +1,10 @@
 <div>
   <h1>N° Historia Clínica</h1>
-  <form class="example-form" [formGroup]="interviewForm" (ngSubmit)="onSubmit()">
+  <form
+    class="example-form"
+    [formGroup]="interviewForm"
+    (ngSubmit)="onSubmit()"
+  >
     <h2>1. Anamnesis</h2>
     <mat-form-field>
       <mat-label>Anamnesis</mat-label>
@@ -101,21 +105,18 @@
           <th mat-header-cell *matHeaderCellDef>SC</th>
           <td mat-cell *matCellDef="let element">
             <mat-form-field>
-              <input
-                matInput
-                type="text"
-              />
+              <input matInput type="text" />
             </mat-form-field>
           </td>
         </ng-container>
         <ng-container matColumnDef="cc">
           <th mat-header-cell *matHeaderCellDef>CC</th>
           <td mat-cell *matCellDef="let element">
-            <mat-form-field  formGroupName="cc">
+            <mat-form-field formGroupName="cc">
               <input
                 matInput
                 type="text"
-                [formControlName]="element.fieldName"  
+                [formControlName]="element.fieldName"
               />
             </mat-form-field>
           </td>
@@ -139,31 +140,25 @@
     <div>
       <h3>Polo anterior</h3>
       <table mat-table [dataSource]="dataSourceAPole">
-        <ng-container matColumnDef="fieldItemPole">
+        <ng-container matColumnDef="label">
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let element">
-            {{ element.fieldItemPole }}
+            {{ element.label }}
           </td>
         </ng-container>
-        <ng-container matColumnDef="aPoleOD">
+        <ng-container matColumnDef="od">
           <th mat-header-cell *matHeaderCellDef>OD</th>
           <td mat-cell *matCellDef="let element">
-            <mat-form-field>
-              <input
-                matInput
-                type="text"
-              />
+            <mat-form-field [formGroupName]="element.fieldName">
+              <input matInput type="text" formControlName="od" />
             </mat-form-field>
           </td>
         </ng-container>
-        <ng-container matColumnDef="aPoleOI">
+        <ng-container matColumnDef="oi">
           <th mat-header-cell *matHeaderCellDef>OI</th>
           <td mat-cell *matCellDef="let element">
-            <mat-form-field>
-              <input
-                matInput
-                type="text"
-              />
+            <mat-form-field [formGroupName]="element.fieldName">
+              <input matInput type="text" formControlName="oi" />
             </mat-form-field>
           </td>
         </ng-container>
@@ -174,31 +169,25 @@
     <div>
       <h3>Polo Posterior</h3>
       <table mat-table [dataSource]="dataSourcePPole">
-        <ng-container matColumnDef="fieldItemPPole">
+        <ng-container matColumnDef="label">
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let element">
-            {{ element.fieldItemPPole }}
+            {{ element.label }}
           </td>
         </ng-container>
-        <ng-container matColumnDef="pPoleOD">
+        <ng-container matColumnDef="od">
           <th mat-header-cell *matHeaderCellDef>OD</th>
           <td mat-cell *matCellDef="let element">
-            <mat-form-field>
-              <input
-                matInput
-                type="text"
-              />
+            <mat-form-field [formGroupName]="element.fieldName">
+              <input matInput type="text" formControlName="od"/>
             </mat-form-field>
           </td>
         </ng-container>
-        <ng-container matColumnDef="pPoleOI">
+        <ng-container matColumnDef="oi">
           <th mat-header-cell *matHeaderCellDef>OI</th>
           <td mat-cell *matCellDef="let element">
-            <mat-form-field>
-              <input
-                matInput
-                type="text"
-              />
+            <mat-form-field [formGroupName]="element.fieldName">
+              <input matInput type="text" formControlName="oi"/>
             </mat-form-field>
           </td>
         </ng-container>
@@ -217,10 +206,7 @@
           <th mat-header-cell *matHeaderCellDef>OD</th>
           <td mat-cell *matCellDef="let element">
             <mat-form-field>
-              <input
-                matInput
-                type="text"
-              />
+              <input matInput type="text" />
             </mat-form-field>
           </td>
         </ng-container>
@@ -228,10 +214,7 @@
           <th mat-header-cell *matHeaderCellDef>OI</th>
           <td mat-cell *matCellDef="let element">
             <mat-form-field>
-              <input
-                matInput
-                type="text"
-              />
+              <input matInput type="text" />
             </mat-form-field>
           </td>
         </ng-container>
