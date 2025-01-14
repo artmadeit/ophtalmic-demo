@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { Page } from './Page';
 import { Person } from './Person';
 import { map } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PersonService {
-  private baseUrl = 'http://localhost:8080/people';
+  private baseUrl = `${environment.apiUrl}/people`;
 
   constructor(private http: HttpClient) { }
 

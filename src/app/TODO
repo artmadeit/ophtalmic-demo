@@ -1,6 +1,6 @@
 [x] agregar seguridad en backend y token en frontend
+[x] crear endpoint de entrevistas clinicas
 
 
 [] falta validar formato de numero de documento segun tipo de documento
 [] desplegar
-[] crear endpoint de entrevistas clinicas
