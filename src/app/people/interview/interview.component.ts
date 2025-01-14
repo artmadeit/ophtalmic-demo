@@ -70,6 +70,12 @@ export class InterviewComponent {
       nervioOptico: this.eyes(fb),
       macula: this.eyes(fb),
       retinaPeriferica: this.eyes(fb),
+
+      //Motilidad ocular
+      kappa: this.eyes(fb),
+      hirschberg: this.eyes(fb),
+      coverTest: this.eyes(fb),
+      ppc: this.eyes(fb),
     });
   }
 
@@ -175,33 +181,33 @@ export class InterviewComponent {
   ]);
   displayedColumnsPPole = ['label', 'od', 'oi'];
 
-  dataSourceOM = new MatTableDataSource<OcularMotility>([
+  dataSourceOM = new MatTableDataSource<EyesDynamicFields>([
     {
-      fieldItemOM: 'Kappa',
-      OcularMotilityOD: '',
-      OcularMotilityOI: '',
+      label: 'Kappa',
+      fieldName: 'kappa',
+      od: '',
+      oi: '',
     },
     {
-      fieldItemOM: 'Hirschberg',
-      OcularMotilityOD: '',
-      OcularMotilityOI: '',
+      label: 'Hirschberg',
+      fieldName: 'hirschberg',
+      od: '',
+      oi: '',
     },
     {
-      fieldItemOM: 'CoverTest',
-      OcularMotilityOD: '',
-      OcularMotilityOI: '',
+      label: 'Cover test',
+      fieldName: 'coverTest',
+      od: '',
+      oi: '',
     },
     {
-      fieldItemOM: 'PPC',
-      OcularMotilityOD: '',
-      OcularMotilityOI: '',
+      label: 'PPC',
+      fieldName: 'ppc',
+      od: '',
+      oi: '',
     },
   ]);
-  displayedColumnsOMotility = [
-    'fieldItemOM',
-    'OcularMotilityOD',
-    'OcularMotilityOI',
-  ];
+  displayedColumnsOMotility = ['label', 'od', 'oi'];
 
   dataSourceK = new MatTableDataSource<EyesDynamicFields>([
     {

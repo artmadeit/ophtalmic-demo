@@ -179,7 +179,7 @@
           <th mat-header-cell *matHeaderCellDef>OD</th>
           <td mat-cell *matCellDef="let element">
             <mat-form-field [formGroupName]="element.fieldName">
-              <input matInput type="text" formControlName="od"/>
+              <input matInput type="text" formControlName="od" />
             </mat-form-field>
           </td>
         </ng-container>
@@ -187,7 +187,7 @@
           <th mat-header-cell *matHeaderCellDef>OI</th>
           <td mat-cell *matCellDef="let element">
             <mat-form-field [formGroupName]="element.fieldName">
-              <input matInput type="text" formControlName="oi"/>
+              <input matInput type="text" formControlName="oi" />
             </mat-form-field>
           </td>
         </ng-container>
@@ -198,23 +198,23 @@
     <div>
       <h3>Motilidad Ocular</h3>
       <table mat-table [dataSource]="dataSourceOM">
-        <ng-container matColumnDef="fieldItemOM">
+        <ng-container matColumnDef="label">
           <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element">{{ element.fieldItemOM }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.label }}</td>
         </ng-container>
-        <ng-container matColumnDef="OcularMotilityOD">
+        <ng-container matColumnDef="od">
           <th mat-header-cell *matHeaderCellDef>OD</th>
           <td mat-cell *matCellDef="let element">
-            <mat-form-field>
-              <input matInput type="text" />
+            <mat-form-field [formGroupName]="element.fieldName">
+              <input matInput type="text" formControlName="od" />
             </mat-form-field>
           </td>
         </ng-container>
-        <ng-container matColumnDef="OcularMotilityOI">
+        <ng-container matColumnDef="oi">
           <th mat-header-cell *matHeaderCellDef>OI</th>
           <td mat-cell *matCellDef="let element">
-            <mat-form-field>
-              <input matInput type="text" />
+            <mat-form-field [formGroupName]="element.fieldName">
+              <input matInput type="text" formControlName="oi" />
             </mat-form-field>
           </td>
         </ng-container>
