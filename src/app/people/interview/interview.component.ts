@@ -4,6 +4,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { EyesDynamicFields } from '../ContactLenses';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 import { VisualAcuity } from '../VisualAcuity';
 import { AnteriorPole } from '../AnteriorPole';
 import { PosteriorPole } from '../PosteriorPole';
@@ -15,7 +16,11 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { from } from 'rxjs';
+
+interface UserType {
+  value: string;
+  text: string;
+}
 
 @Component({
   selector: 'app-interview',
@@ -25,12 +30,18 @@ import { from } from 'rxjs';
     MatTableModule,
     ReactiveFormsModule,
     MatButtonModule,
+    MatSelectModule,
   ],
   templateUrl: './interview.component.html',
   styleUrl: './interview.component.scss',
 })
 export class InterviewComponent {
   interviewForm: FormGroup;
+
+  userTypes: UserType[] = [
+    { value: 'especialista', text: 'ESPECIALISTA' },
+    { value: 'paciente', text: 'PACIENTE' },
+  ];
 
   constructor(private fb: FormBuilder) {
     this.interviewForm = fb.group({
@@ -79,6 +90,8 @@ export class InterviewComponent {
       hirschberg: this.eyes(fb),
       coverTest: this.eyes(fb),
       ppc: this.eyes(fb),
+
+      userType: ['', Validators.required],
     });
   }
 
