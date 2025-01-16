@@ -5,23 +5,8 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { EyesDynamicFields } from '../ContactLenses';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import { VisualAcuity } from '../VisualAcuity';
-import { AnteriorPole } from '../AnteriorPole';
-import { PosteriorPole } from '../PosteriorPole';
-import { OcularMotility } from '../OcularMotility';
-import { Keratrometry } from '../Keratrometry';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Person } from '../Person';
-
-interface UserType {
-  value: string;
-  text: string;
-}
 
 @Component({
   selector: 'app-interview',
@@ -48,13 +33,13 @@ export class InterviewComponent {
       anamnesis: [''],
       lensometryOD: [''],
       lensometryOI: [''],
-      lensometryAdd: ['', Validators.required],
-      refractionLOD: ['', Validators.required],
-      refractionLOI: ['', Validators.required],
-      refractionAOD: ['', Validators.required],
-      refractionAOI: ['', Validators.required],
-      refractionCAdd: ['', Validators.required],
-      refractionCDip: ['', Validators.required],
+      lensometryAdd: [''],
+      refractionLOD: [''],
+      refractionLOI: [''],
+      refractionAOD: [''],
+      refractionAOI: [''],
+      refractionCAdd: [''],
+      refractionCDip: [''],
 
       // lentes de contacto
       poder: this.eyes(fb),
@@ -65,10 +50,6 @@ export class InterviewComponent {
       sc: this.eyes(fb),
       cc: this.eyes(fb),
       presicionOcular: this.eyes(fb),
-
-      // queratometria
-      k1: this.eyes(fb),
-      k2: this.eyes(fb),
 
       //Polo anterior
       parpados: this.eyes(fb),
@@ -90,6 +71,10 @@ export class InterviewComponent {
       hirschberg: this.eyes(fb),
       coverTest: this.eyes(fb),
       ppc: this.eyes(fb),
+
+      // queratometria
+      k1: this.eyes(fb),
+      k2: this.eyes(fb),
 
       specialist: [''],
     });
@@ -167,7 +152,6 @@ export class InterviewComponent {
       oi: '',
     },
   ]);
-  displayedColumnsAPole = ['label', 'od', 'oi'];
 
   dataSourcePPole = new MatTableDataSource<EyesDynamicFields>([
     {
@@ -195,7 +179,6 @@ export class InterviewComponent {
       oi: '',
     },
   ]);
-  displayedColumnsPPole = ['label', 'od', 'oi'];
 
   dataSourceOM = new MatTableDataSource<EyesDynamicFields>([
     {
@@ -223,7 +206,6 @@ export class InterviewComponent {
       oi: '',
     },
   ]);
-  displayedColumnsOMotility = ['label', 'od', 'oi'];
 
   dataSourceK = new MatTableDataSource<EyesDynamicFields>([
     {

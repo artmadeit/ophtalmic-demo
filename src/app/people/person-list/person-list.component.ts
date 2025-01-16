@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
 import { ConfirmDialogComponent } from '../../common/components/confirm-dialog/confirm-dialog.component';
 import { MatSpanishPaginator } from '../../common/MatSpanishPaginator';
 import { Person } from '../Person';
-import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, PersonService } from '../person.service';
+import { PersonService } from '../person.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';

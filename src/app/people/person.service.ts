@@ -5,9 +5,6 @@ import { Person } from './Person';
 import { map } from 'rxjs';
 import { environment } from '../../environments/environment';
 
-export const DEFAULT_PAGE_NUMBER = 0;
-export const DEFAULT_PAGE_SIZE = 10;
-
 @Injectable({
   providedIn: 'root',
 })
