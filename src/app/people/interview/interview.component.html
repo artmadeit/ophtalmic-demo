@@ -266,9 +266,9 @@
       <div> 
         <mat-form-field>
           <mat-select formControlName="userType">
-            @for(userType of userTypes; track userType){
-            <mat-option [value]="userType.value">
-              {{ userType.text }}
+            @for(specialist of specialistList; track specialist){
+            <mat-option [value]="specialist.id">
+              {{ specialist.firstName }}
             </mat-option>
             }
           </mat-select>

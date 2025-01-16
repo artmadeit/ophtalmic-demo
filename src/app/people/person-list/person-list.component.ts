@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
 import { ConfirmDialogComponent } from '../../common/components/confirm-dialog/confirm-dialog.component';
 import { MatSpanishPaginator } from '../../common/MatSpanishPaginator';
 import { Person } from '../Person';
-import { PersonService } from '../person.service';
+import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, PersonService } from '../person.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
@@ -71,10 +71,10 @@ export class PersonListComponent implements AfterViewInit {
   }
 
   private loadPersons() {
-    const pageIndex = this.paginator?.pageIndex ?? 0;
-    const pageSize = this.paginator?.pageSize ?? 10;
+    const page = this.paginator?.pageIndex;
+    const pageSize = this.paginator?.pageSize;
 
-    this.personService.findAll(pageIndex, pageSize, this.searchText).subscribe(data => {
+    this.personService.findAll(this.searchText, { page, pageSize }).subscribe(data => {
       this.dataSource.data = data.content;
       this.totalElements = data.page.totalElements;
     });

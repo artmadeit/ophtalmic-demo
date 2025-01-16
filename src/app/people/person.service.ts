@@ -5,13 +5,16 @@ import { Person } from './Person';
 import { map } from 'rxjs';
 import { environment } from '../../environments/environment';
 
+export const DEFAULT_PAGE_NUMBER = 0;
+export const DEFAULT_PAGE_SIZE = 10;
+
 @Injectable({
   providedIn: 'root',
 })
 export class PersonService {
   private baseUrl = `${environment.apiUrl}/people`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   findById(id: number) {
     return this.http.get(`${this.baseUrl}/${id}`).pipe(
@@ -29,11 +32,21 @@ export class PersonService {
     return new Date(year, month - 1, day);
   }
 
-  findAll(page: number, size: number, searchText: string) {
-    let params = new HttpParams()
-      .set('page', page.toString())
-      .set('size', size.toString())
-      .set('searchText', searchText);
+  findAll(
+    searchText: string,
+    otherOptions?: { isSpecialist?: boolean; page?: number; pageSize?: number }
+  ) {
+    const params = new HttpParams().set('searchText', searchText);
+
+    if (otherOptions?.page) {
+      params.set('page', otherOptions.page);
+    }
+
+    if(otherOptions?.pageSize) {
+      params.set('size', otherOptions.pageSize);
+    }
+
+    // isSpecialist
 
     return this.http.get<Page<Person>>(`${this.baseUrl}`, { params });
   }

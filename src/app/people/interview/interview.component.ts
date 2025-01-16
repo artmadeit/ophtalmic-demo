@@ -16,6 +16,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Person } from '../Person';
 
 interface UserType {
   value: string;
@@ -36,18 +37,17 @@ interface UserType {
   styleUrl: './interview.component.scss',
 })
 export class InterviewComponent {
+  // this.personService.findAll('', { isSpecialist: true  })
+
   interviewForm: FormGroup;
 
-  userTypes: UserType[] = [
-    { value: 'especialista', text: 'ESPECIALISTA' },
-    { value: 'paciente', text: 'PACIENTE' },
-  ];
+  specialistList: Person[] = [];
 
   constructor(private fb: FormBuilder) {
     this.interviewForm = fb.group({
-      anamnesis: ['', Validators.required],
-      lensometryOD: ['', Validators.required],
-      lensometryOI: ['', Validators.required],
+      anamnesis: [''],
+      lensometryOD: [''],
+      lensometryOI: [''],
       lensometryAdd: ['', Validators.required],
       refractionLOD: ['', Validators.required],
       refractionLOI: ['', Validators.required],
@@ -91,7 +91,7 @@ export class InterviewComponent {
       coverTest: this.eyes(fb),
       ppc: this.eyes(fb),
 
-      userType: ['', Validators.required],
+      specialist: [''],
     });
   }
 
