@@ -265,7 +265,7 @@
           <mat-select formControlName="specialist">
             @for(specialist of specialistList; track specialist){
             <mat-option [value]="specialist.id">
-              {{ specialist.firstName }}
+              {{ specialist.firstName }}  {{specialist.lastName}}
             </mat-option>
             }
           </mat-select>

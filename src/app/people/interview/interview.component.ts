@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Person } from '../Person';
+import { PersonService } from '../person.service';
 
 @Component({
   selector: 'app-interview',
@@ -21,14 +22,12 @@ import { Person } from '../Person';
   templateUrl: './interview.component.html',
   styleUrl: './interview.component.scss',
 })
-export class InterviewComponent {
-  // this.personService.findAll('', { isSpecialist: true  })
-
+export class InterviewComponent implements OnInit {
   interviewForm: FormGroup;
 
   specialistList: Person[] = [];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private personService: PersonService) {
     this.interviewForm = fb.group({
       anamnesis: [''],
       lensometryOD: [''],
@@ -77,6 +76,11 @@ export class InterviewComponent {
       k2: this.eyes(fb),
 
       specialist: [''],
+    });
+  }
+  ngOnInit(): void {
+    this.personService.findAll('', { isSpecialist: true }).subscribe((data) => {
+      this.specialistList = data.content;
     });
   }
 

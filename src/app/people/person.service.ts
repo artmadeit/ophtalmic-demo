@@ -33,17 +33,19 @@ export class PersonService {
     searchText: string,
     otherOptions?: { isSpecialist?: boolean; page?: number; pageSize?: number }
   ) {
-    const params = new HttpParams().set('searchText', searchText);
+    let params = new HttpParams().set('searchText', searchText);
 
     if (otherOptions?.page) {
-      params.set('page', otherOptions.page);
+      params = params.set('page', otherOptions.page);
     }
 
-    if(otherOptions?.pageSize) {
-      params.set('size', otherOptions.pageSize);
+    if (otherOptions?.pageSize) {
+      params = params.set('size', otherOptions.pageSize);
     }
 
-    // isSpecialist
+    if (otherOptions?.isSpecialist) {
+      params = params.set('isSpecialist', 'true');
+    }
 
     return this.http.get<Page<Person>>(`${this.baseUrl}`, { params });
   }
