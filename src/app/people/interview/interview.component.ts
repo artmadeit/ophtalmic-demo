@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Person } from '../Person';
 import { PersonService } from '../person.service';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-interview',
@@ -18,6 +19,7 @@ import { PersonService } from '../person.service';
     ReactiveFormsModule,
     MatButtonModule,
     MatSelectModule,
+    MatAutocompleteModule,
   ],
   templateUrl: './interview.component.html',
   styleUrl: './interview.component.scss',
