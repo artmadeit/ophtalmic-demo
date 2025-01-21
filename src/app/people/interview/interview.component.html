@@ -267,11 +267,15 @@
             placeholder="Pick one"
             matInput
             [matAutocomplete]="auto"
-            formControlName="specialistList"
+            formControlName="specialist"
           />
-          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-autocomplete
+            autoActiveFirstOption
+            #auto="matAutocomplete"
+            [displayWith]="displayFn"
+          >
             @for(specialist of specialistList; track specialist) {
-            <mat-option [value]="specialist.id">
+            <mat-option [value]="specialist">
               {{ specialist.firstName }} {{ specialist.lastName }}
             </mat-option>
             }

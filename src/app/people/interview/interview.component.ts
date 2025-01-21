@@ -9,6 +9,16 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Person } from '../Person';
 import { PersonService } from '../person.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  Observable,
+  Subscription,
+  switchMap,
+} from 'rxjs';
+import { Page } from '../Page';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-interview',
@@ -31,7 +41,7 @@ export class InterviewComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private personService: PersonService) {
     this.interviewForm = fb.group({
-      anamnesis: [''],
+      anamnesis: [''],    
       lensometryOD: [''],
       lensometryOI: [''],
       lensometryAdd: [''],
@@ -80,10 +90,30 @@ export class InterviewComponent implements OnInit {
       specialist: [''],
     });
   }
+
+  getFullName(person: Person) {
+    return `${person.firstName} ${person.lastName}`;
+  }
+
   ngOnInit(): void {
-    this.personService.findAll('', { isSpecialist: true }).subscribe((data) => {
-      this.specialistList = data.content;
-    });
+    this.interviewForm
+      .get('specialist')
+      ?.valueChanges.pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap((value) => {
+          const searchText =
+            typeof value === 'string' ? value : this.getFullName(value);
+          return this.personService.findAll(searchText, { isSpecialist: true });
+        })
+      )
+      .subscribe((data) => {
+        this.specialistList = data.content;
+      });
+  }
+
+  displayFn(specialist: Person) {
+    return specialist ? this.getFullName(specialist) : '';
   }
 
   dataSource = new MatTableDataSource<EyesDynamicFields>([
