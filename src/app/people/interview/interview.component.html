@@ -10,286 +10,291 @@
       <mat-label>Anamnesis</mat-label>
       <textarea matInput formControlName="anamnesis"></textarea>
     </mat-form-field>
-    <h2>2. Tratamiento</h2>
-    <h3>Lensometria</h3>
-    <mat-form-field class="example-full-width">
-      <mat-label>OD</mat-label>
-      <input matInput type="text" formControlName="lensometryOD" />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>OI</mat-label>
-      <input matInput type="text" formControlName="lensometryOI" />
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-      <mat-label>ADD</mat-label>
-      <input matInput type="text" formControlName="lensometryAdd" />
-    </mat-form-field>
-    <!--Refraction form--->
-    <h3>Refracción</h3>
-    <div class="far-container">
-      <div>
-        <h4>Lejos</h4>
-        <mat-form-field class="ref-width">
+
+    <div formGroupName="treatment">
+      <h2>2. Tratamiento</h2>
+      <div formGroupName="lensometria">
+        <h3>Lensometria</h3>
+        <mat-form-field class="example-full-width">
           <mat-label>OD</mat-label>
-          <input matInput type="text" formControlName="refractionLOD" />
+          <input matInput type="text" formControlName="lensometryOD" />
         </mat-form-field>
-        <mat-form-field class="ref-width">
+        <mat-form-field>
           <mat-label>OI</mat-label>
-          <input matInput type="text" formControlName="refractionLOI" />
+          <input matInput type="text" formControlName="lensometryOI" />
         </mat-form-field>
-      </div>
-      <div>
-        <h4>AV</h4>
-        <mat-form-field class="ref-width">
-          <mat-label>OD</mat-label>
-          <input matInput type="text" formControlName="refractionAOD" />
-        </mat-form-field>
-        <mat-form-field class="ref-width">
-          <mat-label>OI</mat-label>
-          <input matInput type="text" formControlName="refractionAOI" />
-        </mat-form-field>
-      </div>
-    </div>
-    <div>
-      <div>
-        <h4>Cerca</h4>
         <mat-form-field class="example-full-width">
           <mat-label>ADD</mat-label>
-          <input matInput type="text" formControlName="refractionCAdd" />
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>DIP</mat-label>
-          <input matInput type="text" formControlName="refractionCDip" />
+          <input matInput type="text" formControlName="lensometryAdd" />
         </mat-form-field>
       </div>
+      <div formGroupName="refraccion">
+        <h3>Refracción</h3>
+        <div class="far-container">
+          <div>
+            <h4>Lejos</h4>
+            <mat-form-field class="ref-width">
+              <mat-label>OD</mat-label>
+              <input matInput type="text" formControlName="refractionLOD" />
+            </mat-form-field>
+            <mat-form-field class="ref-width">
+              <mat-label>OI</mat-label>
+              <input matInput type="text" formControlName="refractionLOI" />
+            </mat-form-field>
+          </div>
+          <div>
+            <h4>AV</h4>
+            <mat-form-field class="ref-width">
+              <mat-label>OD</mat-label>
+              <input matInput type="text" formControlName="refractionAOD" />
+            </mat-form-field>
+            <mat-form-field class="ref-width">
+              <mat-label>OI</mat-label>
+              <input matInput type="text" formControlName="refractionAOI" />
+            </mat-form-field>
+          </div>
+        </div>
+        <div>
+          <div>
+            <h4>Cerca</h4>
+            <mat-form-field class="example-full-width">
+              <mat-label>ADD</mat-label>
+              <input matInput type="text" formControlName="refractionCAdd" />
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>DIP</mat-label>
+              <input matInput type="text" formControlName="refractionCDip" />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div formGroupName="lentesContacto">
+        <h3>Lentes de Contacto</h3>
+        <table mat-table [dataSource]="dataSource">
+          <!--fieldName column-->
+          <ng-container matColumnDef="label">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">{{ element.label }}</td>
+          </ng-container>
+          <!--cLensesOD column-->
+          <ng-container matColumnDef="od">
+            <th mat-header-cell *matHeaderCellDef>OD</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field [formGroupName]="element.fieldName">
+                <input matInput type="text" formControlName="od" />
+              </mat-form-field>
+            </td>
+          </ng-container>
+          <!--cLensesOI column-->
+          <ng-container matColumnDef="oi">
+            <th mat-header-cell *matHeaderCellDef>OI</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field [formGroupName]="element.fieldName">
+                <input matInput type="text" formControlName="oi" />
+              </mat-form-field>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
     </div>
-    <div>
-      <h4>Lentes de Contacto</h4>
-      <table mat-table [dataSource]="dataSource">
-        <!--fieldName column-->
-        <ng-container matColumnDef="label">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element">{{ element.label }}</td>
-        </ng-container>
-        <!--cLensesOD column-->
-        <ng-container matColumnDef="od">
-          <th mat-header-cell *matHeaderCellDef>OD</th>
-          <td mat-cell *matCellDef="let element">
-            <mat-form-field [formGroupName]="element.fieldName">
-              <input matInput type="text" formControlName="od" />
-            </mat-form-field>
-          </td>
-        </ng-container>
-        <!--cLensesOI column-->
-        <ng-container matColumnDef="oi">
-          <th mat-header-cell *matHeaderCellDef>OI</th>
-          <td mat-cell *matCellDef="let element">
-            <mat-form-field [formGroupName]="element.fieldName">
-              <input matInput type="text" formControlName="oi" />
-            </mat-form-field>
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-    </div>
-    <h2>3. Examen Oftamológico</h2>
-    <div>
-      <h3>Agudeza Visual</h3>
-      <table mat-table [dataSource]="dataSourceVAcuity">
-        <ng-container matColumnDef="eye">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element">{{ element.label }}</td>
-        </ng-container>
-        <ng-container matColumnDef="sc">
-          <th mat-header-cell *matHeaderCellDef>SC</th>
-          <td mat-cell *matCellDef="let element">
-            <mat-form-field formGroupName="sc">
-              <input
-                matInput
-                type="text"
-                [formControlName]="element.fieldName"
-              />
-            </mat-form-field>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="cc">
-          <th mat-header-cell *matHeaderCellDef>CC</th>
-          <td mat-cell *matCellDef="let element">
-            <mat-form-field formGroupName="cc">
-              <input
-                matInput
-                type="text"
-                [formControlName]="element.fieldName"
-              />
-            </mat-form-field>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="presicionOcular">
-          <th mat-header-cell *matHeaderCellDef>Precisión ocular</th>
-          <td mat-cell *matCellDef="let element">
-            <mat-form-field formGroupName="presicionOcular">
-              <input
-                matInput
-                type="text"
-                [formControlName]="element.fieldName"
-              />
-            </mat-form-field>
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumnsVAcuity"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumnsVAcuity"></tr>
-      </table>
-    </div>
-    <div>
-      <h3>Polo anterior</h3>
-      <table mat-table [dataSource]="dataSourceAPole">
-        <ng-container matColumnDef="label">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.label }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="od">
-          <th mat-header-cell *matHeaderCellDef>OD</th>
-          <td mat-cell *matCellDef="let element">
-            <mat-form-field [formGroupName]="element.fieldName">
-              <input matInput type="text" formControlName="od" />
-            </mat-form-field>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="oi">
-          <th mat-header-cell *matHeaderCellDef>OI</th>
-          <td mat-cell *matCellDef="let element">
-            <mat-form-field [formGroupName]="element.fieldName">
-              <input matInput type="text" formControlName="oi" />
-            </mat-form-field>
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-    </div>
-    <div>
-      <h3>Polo Posterior</h3>
-      <table mat-table [dataSource]="dataSourcePPole">
-        <ng-container matColumnDef="label">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.label }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="od">
-          <th mat-header-cell *matHeaderCellDef>OD</th>
-          <td mat-cell *matCellDef="let element">
-            <mat-form-field [formGroupName]="element.fieldName">
-              <input matInput type="text" formControlName="od" />
-            </mat-form-field>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="oi">
-          <th mat-header-cell *matHeaderCellDef>OI</th>
-          <td mat-cell *matCellDef="let element">
-            <mat-form-field [formGroupName]="element.fieldName">
-              <input matInput type="text" formControlName="oi" />
-            </mat-form-field>
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-    </div>
-    <div>
-      <h3>Motilidad Ocular</h3>
-      <table mat-table [dataSource]="dataSourceOM">
-        <ng-container matColumnDef="label">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element">{{ element.label }}</td>
-        </ng-container>
-        <ng-container matColumnDef="od">
-          <th mat-header-cell *matHeaderCellDef>OD</th>
-          <td mat-cell *matCellDef="let element">
-            <mat-form-field [formGroupName]="element.fieldName">
-              <input matInput type="text" formControlName="od" />
-            </mat-form-field>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="oi">
-          <th mat-header-cell *matHeaderCellDef>OI</th>
-          <td mat-cell *matCellDef="let element">
-            <mat-form-field [formGroupName]="element.fieldName">
-              <input matInput type="text" formControlName="oi" />
-            </mat-form-field>
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-    </div>
-    <div>
-      <h3>Queratrometria</h3>
-      <table mat-table [dataSource]="dataSourceK">
-        <ng-container matColumnDef="label">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element">{{ element.label }}</td>
-        </ng-container>
-        <ng-container matColumnDef="od">
-          <th mat-header-cell *matHeaderCellDef>OD</th>
-          <td mat-cell *matCellDef="let element">
-            <mat-form-field [formGroupName]="element.fieldName">
-              <input matInput type="text" formControlName="od" />
-            </mat-form-field>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="oi">
-          <th mat-header-cell *matHeaderCellDef>OI</th>
-          <td mat-cell *matCellDef="let element">
-            <mat-form-field [formGroupName]="element.fieldName">
-              <input matInput type="text" formControlName="oi" />
-            </mat-form-field>
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-    </div>
-    <div>
-      <h2>4. Diagnóstico</h2>
+
+    <div formGroupName="exam">
+      <h2>3. Examen Oftamológico</h2>
       <div>
-        <mat-form-field>
-          <textarea matInput></textarea>
-        </mat-form-field>
+        <h3>Agudeza Visual</h3>
+        <table mat-table [dataSource]="dataSourceVAcuity" formGroupName="agudezaVisual">
+          <ng-container matColumnDef="eye">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">{{ element.label }}</td>
+          </ng-container>
+          <ng-container matColumnDef="sc">
+            <th mat-header-cell *matHeaderCellDef>SC</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field formGroupName="sc">
+                <input
+                  matInput
+                  type="text"
+                  [formControlName]="element.fieldName"
+                />
+              </mat-form-field>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="cc">
+            <th mat-header-cell *matHeaderCellDef>CC</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field formGroupName="cc">
+                <input
+                  matInput
+                  type="text"
+                  [formControlName]="element.fieldName"
+                />
+              </mat-form-field>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="precisionOcular">
+            <th mat-header-cell *matHeaderCellDef>Precisión ocular</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field formGroupName="precisionOcular">
+                <input
+                  matInput
+                  type="text"
+                  [formControlName]="element.fieldName"
+                />
+              </mat-form-field>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsVAcuity"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumnsVAcuity"
+          ></tr>
+        </table>
       </div>
       <div>
-        <mat-form-field>
-          <input
-            type="text"
-            placeholder="Pick one"
-            matInput
-            [matAutocomplete]="auto"
-            formControlName="specialist"
-          />
-          <mat-autocomplete
-            autoActiveFirstOption
-            #auto="matAutocomplete"
-            [displayWith]="displayFn"
-          >
-            @for(specialist of specialistList; track specialist) {
-            <mat-option [value]="specialist">
-              {{ specialist.firstName }} {{ specialist.lastName }}
-            </mat-option>
-            }
-          </mat-autocomplete>
-          <!-- <mat-select formControlName="specialist">
-            @for(specialist of specialistList; track specialist){
-            <mat-option [value]="specialist.id">
-              {{ specialist.firstName }}  {{specialist.lastName}}
-            </mat-option>
-            }
-          </mat-select> -->
-        </mat-form-field>
+        <h3>Polo anterior</h3>
+        <table mat-table [dataSource]="dataSourceAPole">
+          <ng-container matColumnDef="label">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.label }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="od">
+            <th mat-header-cell *matHeaderCellDef>OD</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field [formGroupName]="element.fieldName">
+                <input matInput type="text" formControlName="od" />
+              </mat-form-field>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="oi">
+            <th mat-header-cell *matHeaderCellDef>OI</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field [formGroupName]="element.fieldName">
+                <input matInput type="text" formControlName="oi" />
+              </mat-form-field>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
       </div>
-      <button mat-flat-button type="submit">Guardar</button>
+      <div>
+        <h3>Polo Posterior</h3>
+        <table mat-table [dataSource]="dataSourcePPole">
+          <ng-container matColumnDef="label">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.label }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="od">
+            <th mat-header-cell *matHeaderCellDef>OD</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field [formGroupName]="element.fieldName">
+                <input matInput type="text" formControlName="od" />
+              </mat-form-field>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="oi">
+            <th mat-header-cell *matHeaderCellDef>OI</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field [formGroupName]="element.fieldName">
+                <input matInput type="text" formControlName="oi" />
+              </mat-form-field>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+      <div>
+        <h3>Motilidad Ocular</h3>
+        <table mat-table [dataSource]="dataSourceOM">
+          <ng-container matColumnDef="label">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">{{ element.label }}</td>
+          </ng-container>
+          <ng-container matColumnDef="od">
+            <th mat-header-cell *matHeaderCellDef>OD</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field [formGroupName]="element.fieldName">
+                <input matInput type="text" formControlName="od" />
+              </mat-form-field>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="oi">
+            <th mat-header-cell *matHeaderCellDef>OI</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field [formGroupName]="element.fieldName">
+                <input matInput type="text" formControlName="oi" />
+              </mat-form-field>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+      <div>
+        <h3>Queratrometria</h3>
+        <table mat-table [dataSource]="dataSourceK">
+          <ng-container matColumnDef="label">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">{{ element.label }}</td>
+          </ng-container>
+          <ng-container matColumnDef="od">
+            <th mat-header-cell *matHeaderCellDef>OD</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field [formGroupName]="element.fieldName">
+                <input matInput type="text" formControlName="od" />
+              </mat-form-field>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="oi">
+            <th mat-header-cell *matHeaderCellDef>OI</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field [formGroupName]="element.fieldName">
+                <input matInput type="text" formControlName="oi" />
+              </mat-form-field>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+      <div>
+        <h2>4. Diagnóstico</h2>
+        <div>
+          <mat-form-field>
+            <textarea matInput></textarea>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input
+              type="text"
+              placeholder="Pick one"
+              matInput
+              [matAutocomplete]="auto"
+              formControlName="specialist"
+            />
+            <mat-autocomplete
+              autoActiveFirstOption
+              #auto="matAutocomplete"
+              [displayWith]="displayFn"
+            >
+              @for(specialist of specialistList; track specialist) {
+              <mat-option [value]="specialist">
+                {{ specialist.firstName }} {{ specialist.lastName }}
+              </mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <button mat-flat-button type="submit">Guardar</button>
+      </div>
     </div>
   </form>
 </div>

@@ -41,52 +41,58 @@ export class InterviewComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private personService: PersonService) {
     this.interviewForm = fb.group({
-      anamnesis: [''],    
-      lensometryOD: [''],
-      lensometryOI: [''],
-      lensometryAdd: [''],
-      refractionLOD: [''],
-      refractionLOI: [''],
-      refractionAOD: [''],
-      refractionAOI: [''],
-      refractionCAdd: [''],
-      refractionCDip: [''],
-
-      // lentes de contacto
-      poder: this.eyes(fb),
-      curvaBase: this.eyes(fb),
-      diametro: this.eyes(fb),
-
-      // agudeza visual
-      sc: this.eyes(fb),
-      cc: this.eyes(fb),
-      presicionOcular: this.eyes(fb),
-
-      //Polo anterior
-      parpados: this.eyes(fb),
-      conjuntiva: this.eyes(fb),
-      cornea: this.eyes(fb),
-      iris: this.eyes(fb),
-      pupila: this.eyes(fb),
-      camaraAnterior: this.eyes(fb),
-      cristalino: this.eyes(fb),
-
-      //Polo posterior
-      vitreo: this.eyes(fb),
-      nervioOptico: this.eyes(fb),
-      macula: this.eyes(fb),
-      retinaPeriferica: this.eyes(fb),
-
-      //Motilidad ocular
-      kappa: this.eyes(fb),
-      hirschberg: this.eyes(fb),
-      coverTest: this.eyes(fb),
-      ppc: this.eyes(fb),
-
-      // queratometria
-      k1: this.eyes(fb),
-      k2: this.eyes(fb),
-
+      anamnesis: [''],
+      treatment: fb.group({
+        lensometria: fb.group({
+          od: '',
+          oi: '',
+          add: '',
+        }),
+        refraccion: fb.group({
+          lejos: this.eyes(fb),
+          av: this.eyes(fb),
+          add: '',
+          dip: '',
+        }),
+        lentesContacto: fb.group({
+          poder: this.eyes(fb),
+          curvaBase: this.eyes(fb),
+          diametro: this.eyes(fb),
+        }),
+      }),
+      
+      exam: fb.group({
+        agudezaVisual: fb.group({
+          sc: this.eyes(fb),
+          cc: this.eyes(fb),
+          precisionOcular: this.eyes(fb),
+        }),
+        poloAnterior: fb.group({
+          parpados: this.eyes(fb),
+          conjuntiva: this.eyes(fb),
+          cornea: this.eyes(fb),
+          iris: this.eyes(fb),
+          pupila: this.eyes(fb),
+          camaraAnterior: this.eyes(fb),
+          cristalino: this.eyes(fb),
+        }),
+        poloPosterior: fb.group({
+          vitreo: this.eyes(fb),
+          nervioOptico: this.eyes(fb),
+          macula: this.eyes(fb),
+          retinaPeriferica: this.eyes(fb),
+        }),
+        motilidadOcular: fb.group({
+          kappa: this.eyes(fb),
+          hirschberg: this.eyes(fb),
+          coverTest: this.eyes(fb),
+          ppc: this.eyes(fb),
+        }),
+        queratrometria: fb.group({
+          k1: this.eyes(fb),
+          k2: this.eyes(fb),
+        }),
+      }),
       specialist: [''],
     });
   }
