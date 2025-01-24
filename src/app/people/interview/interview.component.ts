@@ -60,7 +60,7 @@ export class InterviewComponent implements OnInit {
           diametro: this.eyes(fb),
         }),
       }),
-      
+
       exam: fb.group({
         agudezaVisual: fb.group({
           sc: this.eyes(fb),
@@ -148,7 +148,7 @@ export class InterviewComponent implements OnInit {
     { fieldName: 'od', label: 'OD' },
     { fieldName: 'oi', label: 'OI' },
   ]);
-  displayedColumnsVAcuity = ['eye', 'sc', 'cc', 'presicionOcular'];
+  displayedColumnsVAcuity = ['eye', 'sc', 'cc', 'precisionOcular'];
 
   dataSourceAPole = new MatTableDataSource<EyesDynamicFields>([
     {
