@@ -92,8 +92,8 @@ export class InterviewComponent implements OnInit {
           k1: this.eyes(fb),
           k2: this.eyes(fb),
         }),
+        specialist: [''],
       }),
-      specialist: [''],
     });
   }
 
