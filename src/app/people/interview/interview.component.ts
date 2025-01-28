@@ -17,6 +17,8 @@ import {
   Subscription,
   switchMap,
 } from 'rxjs';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { Page } from '../Page';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -30,7 +32,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     MatButtonModule,
     MatSelectModule,
     MatAutocompleteModule,
+    MatDatepickerModule,
   ],
+  providers: [provideNativeDateAdapter()],
   templateUrl: './interview.component.html',
   styleUrl: './interview.component.scss',
 })
@@ -92,6 +96,7 @@ export class InterviewComponent implements OnInit {
           k1: this.eyes(fb),
           k2: this.eyes(fb),
         }),
+        diagnostic: '',
         specialist: [''],
       }),
     });
