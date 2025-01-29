@@ -1,19 +1,21 @@
 <div>
-  <div class="date-div">
-    <h1>N° Historia Clínica</h1>
-    <mat-form-field>
-      <mat-label>Fecha</mat-label>
-      <input matInput [matDatepicker]="picker" />
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-  </div>
-
   <form
     class="example-form"
     [formGroup]="interviewForm"
     (ngSubmit)="onSubmit()"
   >
+    <div class="date-div">
+      <h1>N° Historia Clínica</h1>
+      <mat-form-field>
+        <mat-label>Fecha</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date" />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
     <h2>1. Anamnesis</h2>
     <mat-form-field>
       <mat-label>Anamnesis</mat-label>
@@ -293,37 +295,37 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
       </div>
+    </div>
+    <div>
+      <h2>4. Diagnóstico</h2>
       <div>
-        <h2>4. Diagnóstico</h2>
-        <div>
-          <mat-form-field>
-            <textarea matInput formControlName="diagnostic"></textarea>
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field>
-            <input
-              type="text"
-              placeholder="Pick one"
-              matInput
-              [matAutocomplete]="auto"
-              formControlName="specialist"
-            />
-            <mat-autocomplete
-              autoActiveFirstOption
-              #auto="matAutocomplete"
-              [displayWith]="displayFn"
-            >
-              @for(specialist of specialistList; track specialist) {
-              <mat-option [value]="specialist">
-                {{ specialist.firstName }} {{ specialist.lastName }}
-              </mat-option>
-              }
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-        <button mat-flat-button type="submit">Guardar</button>
+        <mat-form-field>
+          <textarea matInput formControlName="diagnostic"></textarea>
+        </mat-form-field>
       </div>
+      <div>
+        <mat-form-field>
+          <input
+            type="text"
+            placeholder="Pick one"
+            matInput
+            [matAutocomplete]="auto"
+            formControlName="specialist"
+          />
+          <mat-autocomplete
+            autoActiveFirstOption
+            #auto="matAutocomplete"
+            [displayWith]="displayFn"
+          >
+            @for(specialist of specialistList; track specialist) {
+            <mat-option [value]="specialist">
+              {{ specialist.firstName }} {{ specialist.lastName }}
+            </mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <button mat-flat-button type="submit">Guardar</button>
     </div>
   </form>
 </div>

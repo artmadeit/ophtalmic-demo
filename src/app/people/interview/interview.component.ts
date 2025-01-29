@@ -12,15 +12,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {
   debounceTime,
   distinctUntilChanged,
-  map,
-  Observable,
-  Subscription,
   switchMap,
 } from 'rxjs';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { Page } from '../Page';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-interview',
@@ -46,6 +41,7 @@ export class InterviewComponent implements OnInit {
   constructor(private fb: FormBuilder, private personService: PersonService) {
     this.interviewForm = fb.group({
       anamnesis: [''],
+      date:'',
       treatment: fb.group({
         lensometria: fb.group({
           od: '',
@@ -96,9 +92,9 @@ export class InterviewComponent implements OnInit {
           k1: this.eyes(fb),
           k2: this.eyes(fb),
         }),
-        diagnostic: '',
-        specialist: [''],
       }),
+      diagnostic: '',
+      specialist: [''], 
     });
   }
 
