@@ -9,11 +9,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Person } from '../Person';
 import { PersonService } from '../person.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  switchMap,
-} from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
@@ -41,7 +37,7 @@ export class InterviewComponent implements OnInit {
   constructor(private fb: FormBuilder, private personService: PersonService) {
     this.interviewForm = fb.group({
       anamnesis: [''],
-      date:'',
+      date: '',
       treatment: fb.group({
         lensometria: fb.group({
           od: '',
@@ -94,7 +90,7 @@ export class InterviewComponent implements OnInit {
         }),
       }),
       diagnostic: '',
-      specialist: [''], 
+      specialist: [''],
     });
   }
 
