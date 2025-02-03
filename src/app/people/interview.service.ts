@@ -14,4 +14,12 @@ export class InterviewService {
   register(interview: InterviewForm) {
     return this.http.post<InterviewForm>(this.baseUrl, interview);
   }
+
+  edit(id: number, interview: InterviewForm) {
+    return this.http.put<InterviewForm>(`${this.baseUrl}/${id}`, interview);
+  }
+
+  deleteById(id: number) {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
 }
