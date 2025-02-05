@@ -8,7 +8,11 @@
       <h1>N° Historia Clínica</h1>
       <mat-form-field>
         <mat-label>Fecha</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="date" />
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="recordedDateTime"
+        />
         <mat-datepicker-toggle
           matIconSuffix
           [for]="picker"
@@ -305,9 +309,9 @@
       </div>
       <div>
         <mat-form-field>
+          <mat-label>Especialista</mat-label>
           <input
             type="text"
-            placeholder="Pick one"
             matInput
             [matAutocomplete]="auto"
             formControlName="specialist"
@@ -317,7 +321,7 @@
             #auto="matAutocomplete"
             [displayWith]="displayFn"
           >
-            @for(specialist of specialistList; track specialist) {
+            @for(specialist of specialistList; track specialist.id) {
             <mat-option [value]="specialist">
               {{ specialist.firstName }} {{ specialist.lastName }}
             </mat-option>

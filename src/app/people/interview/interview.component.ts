@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -12,6 +12,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ActivatedRoute, Router } from '@angular/router';
+import { InterviewService } from '../interview.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-interview',
@@ -33,11 +36,19 @@ export class InterviewComponent implements OnInit {
   interviewForm: FormGroup;
 
   specialistList: Person[] = [];
+  patientId!: number;
+  snackBar = inject(MatSnackBar);
 
-  constructor(private fb: FormBuilder, private personService: PersonService) {
+  constructor(
+    private fb: FormBuilder,
+    private personService: PersonService,
+    private readonly route: ActivatedRoute,
+    private router: Router,
+    private interviewService: InterviewService
+  ) {
     this.interviewForm = fb.group({
-      anamnesis: [''],
-      date: '',
+      recordedDateTime: new Date(),
+      anamnesis: [''],      
       treatment: fb.group({
         lensometria: fb.group({
           od: '',
@@ -90,7 +101,7 @@ export class InterviewComponent implements OnInit {
         }),
       }),
       diagnostic: '',
-      specialist: [''],
+      specialist: '',
     });
   }
 
@@ -98,7 +109,12 @@ export class InterviewComponent implements OnInit {
     return `${person.firstName} ${person.lastName}`;
   }
 
+  //autocomplete
   ngOnInit(): void {
+    this.route.queryParams.subscribe((queryParams) => {
+      this.patientId = queryParams['personId'];
+    });
+
     this.interviewForm
       .get('specialist')
       ?.valueChanges.pipe(
@@ -115,9 +131,9 @@ export class InterviewComponent implements OnInit {
       });
   }
 
-  displayFn(specialist: Person) {
+  displayFn = (specialist: Person) => {
     return specialist ? this.getFullName(specialist) : '';
-  }
+  };
 
   dataSource = new MatTableDataSource<EyesDynamicFields>([
     {
@@ -269,6 +285,17 @@ export class InterviewComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.interviewForm.value);
+    const data = this.interviewForm.value;
+    const payload = {
+      ...data,
+      // ....TODO: revisar
+      patientId: this.patientId,
+      specialistId: data.specialist.id,
+    };
+
+    this.interviewService.register(payload).subscribe(() => {
+      this.snackBar.open('Persona registrada correctamente');
+      this.router.navigate(['/personas', this.patientId]);
+    });
   }
 }
