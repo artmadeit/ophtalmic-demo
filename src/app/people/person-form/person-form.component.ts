@@ -22,6 +22,7 @@ import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { PersonService } from '../person.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatRadioModule } from '@angular/material/radio';
+import { InterviewService } from '../interview.service';
 
 interface DocumentType {
   value: string;
@@ -66,7 +67,8 @@ export class PersonFormComponent implements OnInit {
     private fb: FormBuilder,
     private personService: PersonService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private interviewService: InterviewService
   ) {
     this.personForm = fb.group({
       firstName: ['', Validators.required],
@@ -97,7 +99,9 @@ export class PersonFormComponent implements OnInit {
         this.personForm.patchValue(person);
       });
 
-      // TODO: interviService find all (..)
+      this.interviewService.findAll(this.personId).subscribe((data) => {
+        this.dataSource.data = data.map((x, i)=> ({...x, number: data.length - i}));
+      });
     }
   }
 

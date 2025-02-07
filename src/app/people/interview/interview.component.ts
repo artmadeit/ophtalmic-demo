@@ -48,7 +48,7 @@ export class InterviewComponent implements OnInit {
   ) {
     this.interviewForm = fb.group({
       recordedDateTime: new Date(),
-      anamnesis: [''],      
+      anamnesis: [''],
       treatment: fb.group({
         lensometria: fb.group({
           od: '',
@@ -288,7 +288,6 @@ export class InterviewComponent implements OnInit {
     const data = this.interviewForm.value;
     const payload = {
       ...data,
-      // ....TODO: revisar
       patientId: this.patientId,
       specialistId: data.specialist.id,
     };

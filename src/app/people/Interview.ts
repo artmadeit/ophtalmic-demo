@@ -1,4 +1,5 @@
 export interface Interview {
-  number: string;
-  date: string;
+  id: number;
+  number: number;
+  recordedDateTime: string;
 }
