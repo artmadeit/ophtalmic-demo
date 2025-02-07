@@ -1,3 +1,3 @@
 export const environment = {
-    apiUrl: 'http://my-prod-url'
+    apiUrl: 'https://ophtalmic-api-661297192383.us-central1.run.app'
 };
