@@ -5,7 +5,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { EyesDynamicFields } from '../ContactLenses';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Person } from '../Person';
 import { PersonService } from '../person.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -101,7 +101,7 @@ export class InterviewComponent implements OnInit {
         }),
       }),
       diagnostic: '',
-      specialist: '',
+      specialist: ['', Validators.required],
     });
   }
 
