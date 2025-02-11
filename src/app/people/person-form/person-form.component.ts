@@ -55,7 +55,7 @@ export class PersonFormComponent implements OnInit {
   recordedDateTime = new Date();
   personForm: FormGroup;
   dataSource = new MatTableDataSource<Interview>([]);
-  displayedColumns = ['interviewNumber', 'interviewDate'];
+  displayedColumns = ['interviewNumber', 'interviewDate', 'actions'];
   isEditing = false;
   personId: number | null = null;
   snackBar = inject(MatSnackBar);
