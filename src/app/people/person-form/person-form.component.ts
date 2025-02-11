@@ -23,6 +23,7 @@ import { PersonService } from '../person.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { InterviewService } from '../interview.service';
+import { DatePipe } from '@angular/common';
 
 interface DocumentType {
   value: string;
@@ -44,12 +45,14 @@ interface DocumentType {
     MatTooltipModule,
     MatTableModule,
     RouterLink,
+    DatePipe,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './person-form.component.html',
   styleUrl: './person-form.component.scss',
 })
 export class PersonFormComponent implements OnInit {
+  recordedDateTime = new Date();
   personForm: FormGroup;
   dataSource = new MatTableDataSource<Interview>([]);
   displayedColumns = ['interviewNumber', 'interviewDate'];
