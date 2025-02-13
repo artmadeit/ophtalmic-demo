@@ -24,6 +24,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { InterviewService } from '../interview.service';
 import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../common/components/confirm-dialog/confirm-dialog.component';
 
 interface DocumentType {
   value: string;
@@ -59,6 +61,7 @@ export class PersonFormComponent implements OnInit {
   isEditing = false;
   personId: number | null = null;
   snackBar = inject(MatSnackBar);
+  readonly dialog = inject(MatDialog);
 
   documentTypes: DocumentType[] = [
     { value: 'DNI', text: 'DNI' },
@@ -132,5 +135,19 @@ export class PersonFormComponent implements OnInit {
         this.router.navigate(['/personas', person.id]);
       });
     }
+  }
+
+  remove(id: number) {
+    const dialogRf = this.dialog.open(ConfirmDialogComponent, {
+      data: { message: '¿Estás seguro que deseas eliminar esta historia clínica?' }
+    });
+
+    dialogRf.afterClosed().subscribe(result => {
+      if (result) {
+        this.interviewService.deleteById(id).subscribe(()=> {
+          this.loadPerson()
+        });
+      }
+    });
   }
 }
