@@ -15,6 +15,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InterviewService } from '../interview.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {MatTimepickerModule} from '@angular/material/timepicker';
 
 @Component({
   selector: 'app-interview',
@@ -27,6 +28,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatSelectModule,
     MatAutocompleteModule,
     MatDatepickerModule,
+    MatTimepickerModule,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './interview.component.html',
@@ -47,6 +49,7 @@ export class InterviewComponent implements OnInit {
     private interviewService: InterviewService
   ) {
     this.interviewForm = fb.group({
+      time: "",
       recordedDateTime: new Date(),
       anamnesis: [''],
       treatment: fb.group({
