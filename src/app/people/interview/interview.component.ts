@@ -5,7 +5,12 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { EyesDynamicFields } from '../ContactLenses';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Person } from '../Person';
 import { PersonService } from '../person.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -15,7 +20,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InterviewService } from '../interview.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {MatTimepickerModule} from '@angular/material/timepicker';
+import { MatTimepickerModule } from '@angular/material/timepicker';
 
 @Component({
   selector: 'app-interview',
@@ -40,6 +45,8 @@ export class InterviewComponent implements OnInit {
   specialistList: Person[] = [];
   patientId!: number;
   snackBar = inject(MatSnackBar);
+  isEditing = true;
+  interviewId!: number;
 
   constructor(
     private fb: FormBuilder,
@@ -49,7 +56,7 @@ export class InterviewComponent implements OnInit {
     private interviewService: InterviewService
   ) {
     this.interviewForm = fb.group({
-      time: "",
+      time: '',
       recordedDateTime: new Date(),
       anamnesis: [''],
       treatment: fb.group({
@@ -112,7 +119,6 @@ export class InterviewComponent implements OnInit {
     return `${person.firstName} ${person.lastName}`;
   }
 
-  //autocomplete
   ngOnInit(): void {
     this.route.queryParams.subscribe((queryParams) => {
       this.patientId = queryParams['personId'];
@@ -132,6 +138,24 @@ export class InterviewComponent implements OnInit {
       .subscribe((data) => {
         this.specialistList = data.content;
       });
+
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id && id !== 'new') {
+      this.isEditing = true;
+      this.interviewId = parseInt(id);
+      this.loadInterview();
+    }
+  }
+
+  private loadInterview() {
+    if (this.interviewId) {
+      this.interviewService
+        .findById(this.interviewId)
+        .subscribe((interview) => {
+          this.interviewForm.patchValue(interview);
+          this.patientId = interview.patient.id
+        });
+    }
   }
 
   displayFn = (specialist: Person) => {
@@ -288,16 +312,25 @@ export class InterviewComponent implements OnInit {
   }
 
   onSubmit() {
-    const data = this.interviewForm.value;
-    const payload = {
-      ...data,
-      patientId: this.patientId,
-      specialistId: data.specialist.id,
-    };
+    const formValue = this.interviewForm.value;
+      const payload = {
+        ...formValue,
+        patientId: this.patientId,
+        specialistId: formValue.specialist.id,
+      };
 
-    this.interviewService.register(payload).subscribe(() => {
-      this.snackBar.open('Persona registrada correctamente');
-      this.router.navigate(['/personas', this.patientId]);
-    });
+    if (this.isEditing) {
+      this.interviewService
+        .edit(this.interviewId, payload)
+        .subscribe(() => {
+          this.snackBar.open('Se actualizó correctamente');
+          this.router.navigate(['/personas', this.patientId]);
+        });
+    } else {
+      this.interviewService.register(payload).subscribe(() => {
+        this.snackBar.open('Persona registrada correctamente');
+        this.router.navigate(['/personas', this.patientId]);
+      });
+    }
   }
 }
