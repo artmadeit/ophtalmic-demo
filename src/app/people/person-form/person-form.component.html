@@ -1,5 +1,5 @@
 <form class="example-form" [formGroup]="personForm" (ngSubmit)="onSubmit()">
-  <h1>Datos Personales</h1>  
+  <h1>Datos Personales</h1>
   <h2>Filiación</h2>
   <mat-grid-list cols="2" rowHeight="2:1" gutterSize="10px">
     <mat-form-field class="example-full-width">
@@ -16,7 +16,7 @@
         @for(documentType of documentTypes; track documentType) {
         <mat-option [value]="documentType.value">{{
           documentType.text
-          }}</mat-option>
+        }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
@@ -28,7 +28,10 @@
       <mat-label>Fecha de Nacimiento</mat-label>
       <input matInput [matDatepicker]="picker" formControlName="birthDate" />
       <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
     <mat-form-field class="example-full-width">
@@ -46,7 +49,7 @@
     <mat-form-field class="example-full-width">
       <mat-label>Correo electrónico</mat-label>
       <input matInput type="email" formControlName="email" />
-    </mat-form-field>    
+    </mat-form-field>
     <mat-form-field class="example-full-width">
       <mat-label>Domicilio</mat-label>
       <input matInput type="text" formControlName="address" />
@@ -70,7 +73,7 @@
 @if(isEditing) {
 <div class="subheader">
   <h2>Historia clínica</h2>
-  <a routerLink="/interview/new" [queryParams]="{personId: personId}">
+  <a routerLink="/interview/new" [queryParams]="{ personId: personId }">
     <button class="btn" mat-fab color="primary" matTooltip="Registrar">
       <mat-icon>add</mat-icon>
     </button>
@@ -84,7 +87,20 @@
     </ng-container>
     <ng-container matColumnDef="interviewDate">
       <th mat-header-cell *matHeaderCellDef>Fecha</th>
-      <td mat-cell *matCellDef="let interview">{{ interview.date }}</td>
+      <td mat-cell *matCellDef="let interview">
+        {{ interview.recordedDateTime | date }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let interview">
+        <a routerLink="/interview/{{interview.id}}" mat-icon-button aria-label="Editar" matTooltip="Editar">
+          <mat-icon>edit</mat-icon>
+        </a>
+        <button mat-icon-button aria-label="Eliminar" matTooltip="Eliminar" (click)="remove(interview.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>

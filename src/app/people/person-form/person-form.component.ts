@@ -24,6 +24,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { tap } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { InterviewService } from '../interview.service';
+import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../common/components/confirm-dialog/confirm-dialog.component';
 
 interface DocumentType {
   value: string;
@@ -46,6 +50,7 @@ interface DocumentType {
     MatTableModule,
     RouterLink,
     MatProgressSpinnerModule,
+    DatePipe,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './person-form.component.html',
@@ -54,11 +59,12 @@ interface DocumentType {
 export class PersonFormComponent implements OnInit {
   personForm: FormGroup;
   dataSource = new MatTableDataSource<Interview>([]);
-  displayedColumns = ['interviewNumber', 'interviewDate'];
+  displayedColumns = ['interviewNumber', 'interviewDate', 'actions'];
   isEditing = false;
   personId: number | null = null;
   snackBar = inject(MatSnackBar);
   isLoading = false;
+  readonly dialog = inject(MatDialog);
 
   documentTypes: DocumentType[] = [
     { value: 'DNI', text: 'DNI' },
@@ -67,10 +73,11 @@ export class PersonFormComponent implements OnInit {
   ];
   
   constructor(
-    private fb: FormBuilder,
+    fb: FormBuilder,
     private personService: PersonService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private interviewService: InterviewService
   ) {
     this.personForm = fb.group({
       firstName: ['', Validators.required],
@@ -101,7 +108,18 @@ export class PersonFormComponent implements OnInit {
         this.personForm.patchValue(person);
       });
 
-      // TODO: interviService find all (..)
+      this.loadInterviews();
+    }
+  }
+
+  private loadInterviews() {
+    if (this.personId) {
+      this.interviewService.findAll(this.personId).subscribe((data) => {
+        this.dataSource.data = data.map((x, i) => ({
+          ...x,
+          number: data.length - i,
+        }));
+      });
     }
   }
 
@@ -157,5 +175,21 @@ export class PersonFormComponent implements OnInit {
           }
         });
     }
+  }
+
+  remove(id: number) {
+    const dialogRf = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: '¿Estás seguro que deseas eliminar esta historia clínica?',
+      },
+    });
+
+    dialogRf.afterClosed().subscribe((result) => {
+      if (result) {
+        this.interviewService.deleteById(id).subscribe(() => {
+          this.loadInterviews();
+        });
+      }
+    });
   }
 }

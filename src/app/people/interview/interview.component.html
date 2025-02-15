@@ -19,6 +19,16 @@
         ></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
+      <mat-form-field>
+        <mat-label>Hora</mat-label>
+        <input
+          matInput
+          [matTimepicker]="timepicker"
+          formControlName="recordedDateTime"
+        />
+        <mat-timepicker #timepicker />
+        <mat-timepicker-toggle [for]="timepicker" matSuffix />
+      </mat-form-field>
     </div>
     <h2>1. Anamnesis</h2>
     <mat-form-field>

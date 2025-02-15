@@ -5,7 +5,12 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { EyesDynamicFields } from '../ContactLenses';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Person } from '../Person';
 import { PersonService } from '../person.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -15,6 +20,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InterviewService } from '../interview.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTimepickerModule } from '@angular/material/timepicker';
 
 @Component({
   selector: 'app-interview',
@@ -27,6 +33,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatSelectModule,
     MatAutocompleteModule,
     MatDatepickerModule,
+    MatTimepickerModule,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './interview.component.html',
@@ -38,17 +45,20 @@ export class InterviewComponent implements OnInit {
   specialistList: Person[] = [];
   patientId!: number;
   snackBar = inject(MatSnackBar);
+  isEditing = true;
+  interviewId!: number;
 
   constructor(
-    private fb: FormBuilder,
+    fb: FormBuilder,
     private personService: PersonService,
     private readonly route: ActivatedRoute,
     private router: Router,
     private interviewService: InterviewService
   ) {
     this.interviewForm = fb.group({
+      time: '',
       recordedDateTime: new Date(),
-      anamnesis: [''],      
+      anamnesis: [''],
       treatment: fb.group({
         lensometria: fb.group({
           od: '',
@@ -101,7 +111,7 @@ export class InterviewComponent implements OnInit {
         }),
       }),
       diagnostic: '',
-      specialist: '',
+      specialist: ['', Validators.required],
     });
   }
 
@@ -109,7 +119,6 @@ export class InterviewComponent implements OnInit {
     return `${person.firstName} ${person.lastName}`;
   }
 
-  //autocomplete
   ngOnInit(): void {
     this.route.queryParams.subscribe((queryParams) => {
       this.patientId = queryParams['personId'];
@@ -129,6 +138,24 @@ export class InterviewComponent implements OnInit {
       .subscribe((data) => {
         this.specialistList = data.content;
       });
+
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id && id !== 'new') {
+      this.isEditing = true;
+      this.interviewId = parseInt(id);
+      this.loadInterview();
+    }
+  }
+
+  private loadInterview() {
+    if (this.interviewId) {
+      this.interviewService
+        .findById(this.interviewId)
+        .subscribe((interview) => {
+          this.interviewForm.patchValue(interview);
+          this.patientId = interview.patient.id;
+        });
+    }
   }
 
   displayFn = (specialist: Person) => {
@@ -285,17 +312,23 @@ export class InterviewComponent implements OnInit {
   }
 
   onSubmit() {
-    const data = this.interviewForm.value;
+    const formValue = this.interviewForm.value;
     const payload = {
-      ...data,
-      // ....TODO: revisar
+      ...formValue,
       patientId: this.patientId,
-      specialistId: data.specialist.id,
+      specialistId: formValue.specialist.id,
     };
 
-    this.interviewService.register(payload).subscribe(() => {
-      this.snackBar.open('Persona registrada correctamente');
-      this.router.navigate(['/personas', this.patientId]);
-    });
+    if (this.isEditing) {
+      this.interviewService.edit(this.interviewId, payload).subscribe(() => {
+        this.snackBar.open('Se actualizó correctamente');
+        this.router.navigate(['/personas', this.patientId]);
+      });
+    } else {
+      this.interviewService.register(payload).subscribe(() => {
+        this.snackBar.open('Persona registrada correctamente');
+        this.router.navigate(['/personas', this.patientId]);
+      });
+    }
   }
 }
