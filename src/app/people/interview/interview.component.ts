@@ -49,7 +49,7 @@ export class InterviewComponent implements OnInit {
   interviewId!: number;
 
   constructor(
-    private fb: FormBuilder,
+    fb: FormBuilder,
     private personService: PersonService,
     private readonly route: ActivatedRoute,
     private router: Router,
@@ -153,7 +153,7 @@ export class InterviewComponent implements OnInit {
         .findById(this.interviewId)
         .subscribe((interview) => {
           this.interviewForm.patchValue(interview);
-          this.patientId = interview.patient.id
+          this.patientId = interview.patient.id;
         });
     }
   }
@@ -313,19 +313,17 @@ export class InterviewComponent implements OnInit {
 
   onSubmit() {
     const formValue = this.interviewForm.value;
-      const payload = {
-        ...formValue,
-        patientId: this.patientId,
-        specialistId: formValue.specialist.id,
-      };
+    const payload = {
+      ...formValue,
+      patientId: this.patientId,
+      specialistId: formValue.specialist.id,
+    };
 
     if (this.isEditing) {
-      this.interviewService
-        .edit(this.interviewId, payload)
-        .subscribe(() => {
-          this.snackBar.open('Se actualizó correctamente');
-          this.router.navigate(['/personas', this.patientId]);
-        });
+      this.interviewService.edit(this.interviewId, payload).subscribe(() => {
+        this.snackBar.open('Se actualizó correctamente');
+        this.router.navigate(['/personas', this.patientId]);
+      });
     } else {
       this.interviewService.register(payload).subscribe(() => {
         this.snackBar.open('Persona registrada correctamente');

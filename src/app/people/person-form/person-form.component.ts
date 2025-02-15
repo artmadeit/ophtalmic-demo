@@ -69,7 +69,7 @@ export class PersonFormComponent implements OnInit {
   ];
 
   constructor(
-    private fb: FormBuilder,
+    fb: FormBuilder,
     private personService: PersonService,
     private router: Router,
     private route: ActivatedRoute,
@@ -109,9 +109,12 @@ export class PersonFormComponent implements OnInit {
   }
 
   private loadInterviews() {
-    if(this.personId) {
+    if (this.personId) {
       this.interviewService.findAll(this.personId).subscribe((data) => {
-        this.dataSource.data = data.map((x, i) => ({ ...x, number: data.length - i }));
+        this.dataSource.data = data.map((x, i) => ({
+          ...x,
+          number: data.length - i,
+        }));
       });
     }
   }
@@ -144,13 +147,15 @@ export class PersonFormComponent implements OnInit {
 
   remove(id: number) {
     const dialogRf = this.dialog.open(ConfirmDialogComponent, {
-      data: { message: '¿Estás seguro que deseas eliminar esta historia clínica?' }
+      data: {
+        message: '¿Estás seguro que deseas eliminar esta historia clínica?',
+      },
     });
 
-    dialogRf.afterClosed().subscribe(result => {
+    dialogRf.afterClosed().subscribe((result) => {
       if (result) {
-        this.interviewService.deleteById(id).subscribe(()=> {
-          this.loadInterviews()
+        this.interviewService.deleteById(id).subscribe(() => {
+          this.loadInterviews();
         });
       }
     });
