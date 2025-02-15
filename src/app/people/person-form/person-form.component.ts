@@ -22,6 +22,8 @@ import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { PersonService } from '../person.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatRadioModule } from '@angular/material/radio';
+import { tap } from 'rxjs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 interface DocumentType {
   value: string;
@@ -43,6 +45,7 @@ interface DocumentType {
     MatTooltipModule,
     MatTableModule,
     RouterLink,
+    MatProgressSpinnerModule,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './person-form.component.html',
@@ -55,13 +58,14 @@ export class PersonFormComponent implements OnInit {
   isEditing = false;
   personId: number | null = null;
   snackBar = inject(MatSnackBar);
+  isLoading = false;
 
   documentTypes: DocumentType[] = [
     { value: 'DNI', text: 'DNI' },
     { value: 'PASSPORT', text: 'PASAPORTE' },
     { value: 'FOREIGNER_CARD', text: 'CARNET DE EXTRANJERIA' },
   ];
-
+  
   constructor(
     private fb: FormBuilder,
     private personService: PersonService,
@@ -113,17 +117,45 @@ export class PersonFormComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.personForm.invalid) return;
+    
+    this.isLoading = true;
+    
     if (this.isEditing && this.personId) {
       this.personService
         .edit(this.personId, this.personForm.value)
-        .subscribe(() => {
-          this.snackBar.open('Persona actualizada correctamente');
+        .pipe(
+          tap({
+            finalize: () => this.isLoading = false
+          })
+        )
+        .subscribe({
+          next: () => {
+            this.snackBar.open('Persona actualizada correctamente', 'Cerrar', { duration: 3000 });
+          },
+          error: (error) => {
+            this.snackBar.open('Error al actualizar la persona', 'Cerrar', { duration: 3000 });
+            console.log(error)
+          }
         });
     } else {
-      this.personService.register(this.personForm.value).subscribe((person) => {
-        this.snackBar.open('Persona registrada correctamente');
-        this.router.navigate(['/personas', person.id]);
-      });
+      this.personService
+        .register(this.personForm.value)
+        .pipe(
+          tap({
+            finalize: () => this.isLoading = false
+          })
+        )
+        .subscribe({
+          next: (person) => {
+            this.snackBar.open('Persona registrada correctamente', 'Cerrar', { duration: 3000 });
+            this.router.navigate(['/personas', person.id]);
+          },
+          error: (error) => {
+            this.snackBar.open('Error al registrar la persona', 'Cerrar', { duration: 3000 });
+            console.log(error)
+          }
+        });
     }
   }
 }
