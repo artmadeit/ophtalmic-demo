@@ -28,6 +28,7 @@ import { InterviewService } from '../interview.service';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../common/components/confirm-dialog/confirm-dialog.component';
+import { handleLoadingSubmit } from '../../common/loading-submit';
 
 interface DocumentType {
   value: string;
@@ -136,45 +137,26 @@ export class PersonFormComponent implements OnInit {
 
   onSubmit() {
     if (this.personForm.invalid) return;
-    
-    this.isLoading = true;
-    
-    if (this.isEditing && this.personId) {
-      this.personService
-        .edit(this.personId, this.personForm.value)
-        .pipe(
-          tap({
-            finalize: () => this.isLoading = false
-          })
-        )
-        .subscribe({
-          next: () => {
-            this.snackBar.open('Persona actualizada correctamente', 'Cerrar', { duration: 3000 });
-          },
-          error: (error) => {
-            this.snackBar.open('Error al actualizar la persona', 'Cerrar', { duration: 3000 });
-            console.log(error)
-          }
-        });
-    } else {
-      this.personService
-        .register(this.personForm.value)
-        .pipe(
-          tap({
-            finalize: () => this.isLoading = false
-          })
-        )
-        .subscribe({
-          next: (person) => {
-            this.snackBar.open('Persona registrada correctamente', 'Cerrar', { duration: 3000 });
+
+    const request$ = this.isEditing && this.personId
+      ? this.personService.edit(this.personId, this.personForm.value)
+      : this.personService.register(this.personForm.value);
+
+    handleLoadingSubmit(
+      this,
+      this.snackBar,
+      request$,
+      {
+        successMessage: this.isEditing
+          ? 'Persona actualizada correctamente'
+          : 'Persona registrada correctamente',
+        onSuccess: (person) => {
+          if (!this.isEditing) {
             this.router.navigate(['/personas', person.id]);
-          },
-          error: (error) => {
-            this.snackBar.open('Error al registrar la persona', 'Cerrar', { duration: 3000 });
-            console.log(error)
           }
-        });
-    }
+        }
+      }
+    ).subscribe();
   }
 
   remove(id: number) {

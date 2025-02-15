@@ -339,7 +339,13 @@
           </mat-autocomplete>
         </mat-form-field>
       </div>
-      <button mat-flat-button type="submit">Guardar</button>
+      <button mat-flat-button type="submit" [disabled]="isLoading || interviewForm.invalid">
+        @if(isLoading) {
+          <mat-spinner diameter="20"></mat-spinner>
+        } @else {
+          Guardar
+        }
+      </button>
     </div>
   </form>
 </div>

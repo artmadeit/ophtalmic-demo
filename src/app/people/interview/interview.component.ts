@@ -21,6 +21,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { InterviewService } from '../interview.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTimepickerModule } from '@angular/material/timepicker';
+import { handleLoadingSubmit } from '../../common/loading-submit';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-interview',
@@ -34,6 +36,7 @@ import { MatTimepickerModule } from '@angular/material/timepicker';
     MatAutocompleteModule,
     MatDatepickerModule,
     MatTimepickerModule,
+    MatProgressSpinnerModule,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './interview.component.html',
@@ -45,8 +48,9 @@ export class InterviewComponent implements OnInit {
   specialistList: Person[] = [];
   patientId!: number;
   snackBar = inject(MatSnackBar);
-  isEditing = true;
+  isEditing = false;
   interviewId!: number;
+  isLoading = false;
 
   constructor(
     fb: FormBuilder,
@@ -312,6 +316,8 @@ export class InterviewComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.interviewForm.invalid) return;
+
     const formValue = this.interviewForm.value;
     const payload = {
       ...formValue,
@@ -319,16 +325,22 @@ export class InterviewComponent implements OnInit {
       specialistId: formValue.specialist.id,
     };
 
-    if (this.isEditing) {
-      this.interviewService.edit(this.interviewId, payload).subscribe(() => {
-        this.snackBar.open('Se actualizó correctamente');
-        this.router.navigate(['/personas', this.patientId]);
-      });
-    } else {
-      this.interviewService.register(payload).subscribe(() => {
-        this.snackBar.open('Persona registrada correctamente');
-        this.router.navigate(['/personas', this.patientId]);
-      });
-    }
+    const request$ = this.isEditing
+      ? this.interviewService.edit(this.interviewId, payload)
+      : this.interviewService.register(payload);
+
+    handleLoadingSubmit(
+      this,
+      this.snackBar,
+      request$,
+      {
+        successMessage: this.isEditing 
+          ? 'Historia clínica actualizada correctamente'
+          : 'Historia clínica registrada correctamente',
+        onSuccess: () => {
+          this.router.navigate(['/personas', this.patientId]);
+        }
+      }
+    ).subscribe();
   }
 }
