@@ -54,7 +54,6 @@ interface DocumentType {
   styleUrl: './person-form.component.scss',
 })
 export class PersonFormComponent implements OnInit {
-  recordedDateTime = new Date();
   personForm: FormGroup;
   dataSource = new MatTableDataSource<Interview>([]);
   displayedColumns = ['interviewNumber', 'interviewDate', 'actions'];
@@ -105,8 +104,14 @@ export class PersonFormComponent implements OnInit {
         this.personForm.patchValue(person);
       });
 
+      this.loadInterviews();
+    }
+  }
+
+  private loadInterviews() {
+    if(this.personId) {
       this.interviewService.findAll(this.personId).subscribe((data) => {
-        this.dataSource.data = data.map((x, i)=> ({...x, number: data.length - i}));
+        this.dataSource.data = data.map((x, i) => ({ ...x, number: data.length - i }));
       });
     }
   }
@@ -145,7 +150,7 @@ export class PersonFormComponent implements OnInit {
     dialogRf.afterClosed().subscribe(result => {
       if (result) {
         this.interviewService.deleteById(id).subscribe(()=> {
-          this.loadPerson()
+          this.loadInterviews()
         });
       }
     });
