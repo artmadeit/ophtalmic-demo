@@ -20,10 +20,15 @@
       {{user.name}}
     </div>
     }
-    <button mat-button (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
+    <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>email</button>
+      <button mat-menu-item>Cerrar sesión</button>
+    </mat-menu> 
+    <!-- <button mat-button (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
       Cerrar sesión
       <mat-icon iconPositionEnd>logout</mat-icon>
-    </button>
+    </button> -->
     } @else {
     <button mat-button (click)="auth.loginWithRedirect()">Iniciar sesión</button>
     }
