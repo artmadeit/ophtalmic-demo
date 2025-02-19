@@ -22,6 +22,9 @@ import { MatMenuModule } from '@angular/material/menu';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
+
+  logoUrl: string = '/assets/ophtalmic.png';
+
   constructor(
     @Inject(DOCUMENT) public document: Document,
     public auth: AuthService

@@ -11,35 +11,34 @@
   <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button> -->
-  <a routerLink="/" style="text-decoration: none">Ophtalmic Center</a>
+  <a routerLink="/" style="text-decoration: none">
+    <img [src]="logoUrl" alt="baby" width="70px" />
+  </a>
   <span class="example-spacer"></span>
   <div style="display: flex; align-items: center; gap: 1rem">
-    @if (auth.isAuthenticated$ | async) { 
-      @if (auth.user$ | async; as user) {       
+    @if (auth.isAuthenticated$ | async) { @if (auth.user$ | async; as user) {
 
-      <button mat-button [matMenuTriggerFor]="menu">
-        <mat-icon>account_circle</mat-icon>
-        {{ user.nickname }}
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon>account_circle</mat-icon>
+      {{ user.nickname }}
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <div style="font-size: 1.2rem">
+          {{ user.name }}
+        </div>
       </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item>
-          <div style="font-size: 1.2rem">
-            {{ user.name }}
-          </div>
-        </button>
-        <button
-          mat-menu-item
-          (click)="
-            auth.logout({ logoutParams: { returnTo: document.location.origin } })
-          "
-        >
-          Cerrar sesión
-          <mat-icon iconPositionEnd>logout</mat-icon>
-        </button>
-      </mat-menu>
-      }
-
-    } @else {
+      <button
+        mat-menu-item
+        (click)="
+          auth.logout({ logoutParams: { returnTo: document.location.origin } })
+        "
+      >
+        Cerrar sesión
+        <mat-icon iconPositionEnd>logout</mat-icon>
+      </button>
+    </mat-menu>
+    } } @else {
     <button mat-button (click)="auth.loginWithRedirect()">
       Iniciar sesión
     </button>
