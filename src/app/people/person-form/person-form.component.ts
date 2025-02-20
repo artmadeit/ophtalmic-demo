@@ -71,6 +71,7 @@ export class PersonFormComponent implements OnInit {
     { value: 'DNI', text: 'DNI' },
     { value: 'PASSPORT', text: 'PASAPORTE' },
     { value: 'FOREIGNER_CARD', text: 'CARNET DE EXTRANJERIA' },
+    { value: 'OTHERS', text: 'OTROS'},
   ];
   
   constructor(
@@ -84,6 +85,13 @@ export class PersonFormComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       documentType: ['', Validators.required],
+      
+      /*
+      if(documentType === "DNI") {
+        Validators.required.maxLength(8)
+      }
+      */
+    
       documentNumber: ['', Validators.required],
       birthDate: '',
       job: [''],
