@@ -1,9 +1,12 @@
 import { Component, inject, model, OnInit } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
 } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -71,9 +74,9 @@ export class PersonFormComponent implements OnInit {
     { value: 'DNI', text: 'DNI' },
     { value: 'PASSPORT', text: 'PASAPORTE' },
     { value: 'FOREIGNER_CARD', text: 'CARNET DE EXTRANJERIA' },
-    { value: 'OTHERS', text: 'OTROS'},
+    { value: 'OTHERS', text: 'OTROS' },
   ];
-  
+
   constructor(
     fb: FormBuilder,
     private personService: PersonService,
@@ -81,25 +84,28 @@ export class PersonFormComponent implements OnInit {
     private route: ActivatedRoute,
     private interviewService: InterviewService
   ) {
-    this.personForm = fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      documentType: ['', Validators.required],
-      
-      /*
+    this.personForm = fb.group(
+      {
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        documentType: ['', Validators.required],
+
+        /*
       if(documentType === "DNI") {
         Validators.required.maxLength(8)
       }
       */
-    
-      documentNumber: ['', Validators.required],
-      birthDate: '',
-      job: [''],
-      phoneNumber: [''],
-      email: ['', [Validators.email]],
-      address: [''],
-      isSpecialist: [false, [Validators.required]],
-    });
+
+        documentNumber: ['', Validators.required],
+        birthDate: '',
+        job: [''],
+        phoneNumber: [''],
+        email: ['', [Validators.email]],
+        address: [''],
+        isSpecialist: [false, [Validators.required]],
+      },
+      { validators: documentValidator }
+    );
   }
 
   ngOnInit() {
@@ -146,25 +152,21 @@ export class PersonFormComponent implements OnInit {
   onSubmit() {
     if (this.personForm.invalid) return;
 
-    const request$ = this.isEditing && this.personId
-      ? this.personService.edit(this.personId, this.personForm.value)
-      : this.personService.register(this.personForm.value);
+    const request$ =
+      this.isEditing && this.personId
+        ? this.personService.edit(this.personId, this.personForm.value)
+        : this.personService.register(this.personForm.value);
 
-    handleLoadingSubmit(
-      this,
-      this.snackBar,
-      request$,
-      {
-        successMessage: this.isEditing
-          ? 'Persona actualizada correctamente'
-          : 'Persona registrada correctamente',
-        onSuccess: (person) => {
-          if (!this.isEditing) {
-            this.router.navigate(['/personas', person.id]);
-          }
+    handleLoadingSubmit(this, this.snackBar, request$, {
+      successMessage: this.isEditing
+        ? 'Persona actualizada correctamente'
+        : 'Persona registrada correctamente',
+      onSuccess: (person) => {
+        if (!this.isEditing) {
+          this.router.navigate(['/personas', person.id]);
         }
-      }
-    ).subscribe();
+      },
+    }).subscribe();
   }
 
   remove(id: number) {
@@ -183,3 +185,16 @@ export class PersonFormComponent implements OnInit {
     });
   }
 }
+
+const documentValidator: ValidatorFn = (
+  control: AbstractControl
+): ValidationErrors | null => {
+  const documentType: string = control.get('documentType')?.value;
+  const documentNumber: string = control.get('documentNumber')?.value;
+
+  if (documentType === 'DNI') {
+    return /^\d{8}$/.test(documentNumber) ? null : { badDocumentFormat: true };
+  }
+
+  return null;
+};
