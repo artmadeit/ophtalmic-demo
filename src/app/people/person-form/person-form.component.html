@@ -23,7 +23,11 @@
     <mat-form-field class="example-full-width">
       <mat-label>Número de documento</mat-label>
       <input matInput type="text" formControlName="documentNumber" />
+      @if(personForm.get('documentNumber')?.hasError('badDocumentFormat')) {
+      <mat-error>abcd</mat-error>
+      }
     </mat-form-field>
+
     <mat-form-field class="example-full-width">
       <mat-label>Fecha de Nacimiento</mat-label>
       <input matInput [matDatepicker]="picker" formControlName="birthDate" />
@@ -61,12 +65,14 @@
     </mat-radio-group>
   </mat-grid-list>
   <div class="saveButtonBox">
-    <button mat-flat-button type="submit" [disabled]="isLoading || personForm.invalid">
+    <button
+      mat-flat-button
+      type="submit"
+      [disabled]="isLoading || personForm.invalid"
+    >
       @if(isLoading) {
-        <mat-spinner diameter="20"></mat-spinner>
-      } @else {
-        Guardar
-      }
+      <mat-spinner diameter="20"></mat-spinner>
+      } @else { Guardar }
     </button>
   </div>
 </form>
@@ -94,10 +100,20 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let interview">
-        <a routerLink="/interview/{{interview.id}}" mat-icon-button aria-label="Editar" matTooltip="Editar">
+        <a
+          routerLink="/interview/{{ interview.id }}"
+          mat-icon-button
+          aria-label="Editar"
+          matTooltip="Editar"
+        >
           <mat-icon>edit</mat-icon>
         </a>
-        <button mat-icon-button aria-label="Eliminar" matTooltip="Eliminar" (click)="remove(interview.id)">
+        <button
+          mat-icon-button
+          aria-label="Eliminar"
+          matTooltip="Eliminar"
+          (click)="remove(interview.id)"
+        >
           <mat-icon>delete</mat-icon>
         </button>
       </td>
