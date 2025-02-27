@@ -88,14 +88,7 @@ export class PersonFormComponent implements OnInit {
       {
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
-        documentType: ['', Validators.required],
-        
-        /*
-      if(documentType === "DNI") {
-        Validators.required.maxLength(8)
-      }
-      */
-
+        documentType: ['', Validators.required],     
         documentNumber: ['', [Validators.required, documentValidator]],
         birthDate: '',
         job: [''],
@@ -194,10 +187,6 @@ const documentValidator: ValidatorFn = (
   if (documentType === 'DNI') {
     return /^\d{8}$/.test(documentNumber) ? null : { badDocumentFormat: true };
   }
-
-  // if(documentType === 'PASSPORT') {
-  //   return a? null: {badPassportFormat: true};
-  // }
 
   return null;
 };
