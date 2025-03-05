@@ -23,6 +23,7 @@
     <mat-form-field class="example-full-width">
       <mat-label>Número de documento</mat-label>
       <input matInput type="text" formControlName="documentNumber" />
+      <mat-icon matSuffix>id_card</mat-icon>
       @if(personForm.get('documentNumber')?.hasError('badDocumentFormat')) {
       <mat-error>abcd</mat-error>
       }
@@ -45,24 +46,30 @@
     <mat-form-field class="example-full-width">
       <mat-label>Ocupación</mat-label>
       <input matInput type="text" formControlName="job" />
+      <mat-icon matSuffix>work</mat-icon>
     </mat-form-field>
     <mat-form-field class="example-full-width">
       <mat-label>Número de teléfono</mat-label>
       <input matInput type="tel" formControlName="phoneNumber" />
+      <mat-icon matSuffix>phone</mat-icon>
     </mat-form-field>
     <mat-form-field class="example-full-width">
       <mat-label>Correo electrónico</mat-label>
       <input matInput type="email" formControlName="email" />
+      <mat-icon matSuffix>contact_mail</mat-icon>
     </mat-form-field>
     <mat-form-field class="example-full-width">
       <mat-label>Domicilio</mat-label>
       <input matInput type="text" formControlName="address" />
+      <mat-icon matSuffix>home</mat-icon>
     </mat-form-field>
-    <mat-radio-group formControlName="isSpecialist">
-      <label>Es especialista?</label>
-      <mat-radio-button [value]="true">Si</mat-radio-button>
-      <mat-radio-button [value]="false">No</mat-radio-button>
-    </mat-radio-group>
+    <div>
+      <mat-radio-group formControlName="isSpecialist">
+        <label>Es especialista?</label>
+        <mat-radio-button [value]="true">Si</mat-radio-button>
+        <mat-radio-button [value]="false">No</mat-radio-button>
+      </mat-radio-group>
+    </div>
   </mat-grid-list>
   <div class="saveButtonBox">
     <button
