@@ -77,7 +77,7 @@
   </div>
 </form>
 @if(isEditing) {
-<div class="subheader">
+<div class="subheader box-m">
   <h2>Historia clínica</h2>
   <a routerLink="/interview/new" [queryParams]="{ personId: personId }">
     <button class="btn" mat-fab color="primary" matTooltip="Registrar">
@@ -85,7 +85,7 @@
     </button>
   </a>
 </div>
-<div class="mat-elevation-z8">
+<div class="mat-elevation-z8 box-m">
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="interviewNumber">
       <th mat-header-cell *matHeaderCellDef>Número</th>
