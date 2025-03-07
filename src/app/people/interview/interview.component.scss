@@ -11,6 +11,14 @@
   margin-right: 10px;
 }
 
+.field-section {
+  width: 100%;
+}
+
+.date-field {
+  padding-right: 10px;
+}
+
 .far-container {
   display: flex;
 }
@@ -19,7 +27,13 @@
   width: 96%;
 }
 
-.date-div {
+.date-section {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.btn-interviewForm {
+  display: flex;
+  justify-content: flex-end;
 }

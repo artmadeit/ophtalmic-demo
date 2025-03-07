@@ -4,34 +4,36 @@
     [formGroup]="interviewForm"
     (ngSubmit)="onSubmit()"
   >
-    <div class="date-div">
+    <div class="date-section">
       <h1>N° Historia Clínica</h1>
-      <mat-form-field>
-        <mat-label>Fecha</mat-label>
-        <input
-          matInput
-          [matDatepicker]="picker"
-          formControlName="recordedDateTime"
-        />
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="picker"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Hora</mat-label>
-        <input
-          matInput
-          [matTimepicker]="timepicker"
-          formControlName="recordedDateTime"
-        />
-        <mat-timepicker #timepicker />
-        <mat-timepicker-toggle [for]="timepicker" matSuffix />
-      </mat-form-field>
+      <div>
+        <mat-form-field class="date-field">
+          <mat-label>Fecha</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="recordedDateTime"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Hora</mat-label>
+          <input
+            matInput
+            [matTimepicker]="timepicker"
+            formControlName="recordedDateTime"
+          />
+          <mat-timepicker #timepicker />
+          <mat-timepicker-toggle [for]="timepicker" matSuffix />
+        </mat-form-field>
+      </div>
     </div>
     <h2>1. Anamnesis</h2>
-    <mat-form-field>
+    <mat-form-field class="field-section">
       <mat-label>Anamnesis</mat-label>
       <textarea matInput formControlName="anamnesis"></textarea>
     </mat-form-field>
@@ -313,12 +315,12 @@
     <div>
       <h2>4. Diagnóstico</h2>
       <div>
-        <mat-form-field>
+        <mat-form-field class="field-section">
           <textarea matInput formControlName="diagnostic"></textarea>
         </mat-form-field>
       </div>
       <div>
-        <mat-form-field>
+        <mat-form-field class="field-section">
           <mat-label>Especialista</mat-label>
           <input
             type="text"
@@ -339,13 +341,15 @@
           </mat-autocomplete>
         </mat-form-field>
       </div>
-      <button mat-flat-button type="submit" [disabled]="isLoading || interviewForm.invalid">
-        @if(isLoading) {
+      <div class="btn-interviewForm">
+        <button mat-flat-button type="submit" [disabled]="isLoading || interviewForm.invalid">
+          @if(isLoading) {
           <mat-spinner diameter="20"></mat-spinner>
-        } @else {
-          Guardar
-        }
-      </button>
+          } @else { 
+            Guardar
+          }
+        </button>
+      </div>
     </div>
   </form>
 </div>
